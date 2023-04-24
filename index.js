@@ -15,6 +15,11 @@ app.use(express.urlencoded({
     extended: false
 }));
 
+const router = {
+    
+}
+
+
 async function main () {
     app.get("/", (req, res) => {
         res.send("hello!")
