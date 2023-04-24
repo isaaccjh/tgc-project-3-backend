@@ -1,0 +1,21 @@
+{
+  "name": "tgc-project-3-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mon": "npm i -g nodemon && nodemon index.js",
+    "migrate": "node node_modules/db-migrate/bin/db-migrate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.2.3",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "hbs": "^4.2.0",
+    "wax-on": "^1.2.2"
+  }
+}
