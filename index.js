@@ -15,15 +15,13 @@ app.use(express.urlencoded({
     extended: false
 }));
 
-const router = {
-    
+const routes = {
+    lures: require("./routes/products/lures")
 }
 
 
 async function main () {
-    app.get("/", (req, res) => {
-        res.send("hello!")
-    })
+    app.use("/", routes.lures)
 }
 
 main();
