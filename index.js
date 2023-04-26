@@ -16,7 +16,7 @@ app.use(express.urlencoded({
 }));
 
 const routes = {
-    lures: require("./routes/products/lures")
+    lures: require("./routes/lures")
 }
 
 
