@@ -1,8 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.render("lures/index")
+const { Lure } = require("../models");
+
+router.get("/", async (req, res) => {
+    const lures = await Lure.collection().fetch();
+
+    res.render("lures/index", {
+        "lures": lures.toJSON()
+    })
 });
 
 module.exports = router;
