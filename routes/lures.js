@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { Lure, Serie, Variant, Colour, Property } = require("../models");
-const { bootstrapField, createLureForm } = require("../forms");
+const { bootstrapField, createLureForm, createVariantForm } = require("../forms");
 const { updateValues } = require("../helpers/updateForm")
 
 router.get("/", async (req, res) => {
@@ -21,8 +21,6 @@ router.get("/create", async (req, res) => {
     })
 
     const lureForm = createLureForm(allSeries);
-
-    console.log(allSeries)
 
     res.render("lures/create", {
         "form": lureForm.toHTML(bootstrapField)
@@ -148,14 +146,27 @@ router.get("/:lure_id/variants", async (req, res) => {
         require: true
     });
 
-    res.render("lures/variants", {
+    res.render("variants/index", {
         "lure": lure.toJSON(),
         "variants": variants?.toJSON()
     })
 })
 
-router.get("/:lure_id/variants/create", async (req, res) => {
-    
+router.get("/:lure_id/variant/create", async (req, res) => {
+
+    const allColours = await Colour.fetchAll().map(colour => {
+        return [colour.get("id"), colour.get("name")]
+    });
+
+    const allProperties = await Property.fetchAll().map(property => {
+        return [property.get("id"), property.get("name")]
+    });
+
+    const variantForm = createVariantForm(allColours, allProperties);
+
+    res.render("variants/create", {
+        "form": variantForm.toHTML(bootstrapField)
+    })
 })
 
 module.exports = router;

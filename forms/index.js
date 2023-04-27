@@ -96,7 +96,7 @@ const createLureForm = (series) => {
 
 const createVariantForm = (colours, property) => {
     return forms.create({
-        "colour_id": forms.string({
+        "colour_id": fields.string({
             label: "Colour",
             required: true,
             errorAfterField: true,
@@ -106,15 +106,17 @@ const createVariantForm = (colours, property) => {
             widget: widgets.select(),
             choices: colours
         }),
-        "property_id": forms.string({
+        "property_id": fields.string({
             label: "Property",
             required: true,
             errorAfterField: true,
             cssClasses: {
                 label: ["form-label, mt-2"]
-            }
+            },
+            widget: widgets.select(),
+            choices: property
         }),
-        "stock": forms.number({
+        "stock": fields.number({
             required: true,
             errorAfterField: true,
             cssClasses: {
