@@ -48,8 +48,35 @@ router.get("/:lure_id/update", async (req, res) => {
         "form": lureForm.toHTML(bootstrapField),
         "lure": lure.toJSON()
     })
+});
 
+router.post("/:lure_id/update", async (req, res) => {
+    const lure = await Lure.where({
+        "id": req.params.lure_id
+    }).fetch({
+        require: true
+    });
 
+    const lureForm = createLureForm();
+    lureForm.handle(req, {
+        "success": async (form) => {
+            lure.set(form.data);
+            lure.save();
+            res.redirect("/lures")
+        },
+        "error": async (form) => {
+            res.render("lures/update", {
+                "form": form.toHTML(bootstrapField),
+                "lure": lure.toJSON()
+            })
+        },
+        "empty": async (form) => {
+            res.render("lures/update", {
+                "form": form.toHTML(bootstrapField),
+                "lure": lure.toJSON()
+            })
+        }
+    })
 })
 
 module.exports = router;

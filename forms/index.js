@@ -31,50 +31,54 @@ const createLureForm = () => {
             required: true,
             errorAfterField: true,
             cssClasses: {
-                label: ["form-label"]
+                label: ["form-label, mt-2"]
             }
         }),
         "description":fields.string({
             required: true,
             errorAfterField: true,
             cssClasses: {
-                label: ["form-label"]
+                label: ["form-label, mt-2"]
             }
         }),
         "hook": fields.string({
             required: true,
             errorAfterField: true,
             cssClasses: {
-                label: ["form-label"]
+                label: ["form-label, mt-2"]
             }
         }),
         "type": fields.string({
             required: true,
             errorAfterField: true,
             cssClasses: {
-                label: ["form-label"]
+                label: ["form-label, mt-2"]
             }
         }),
         "size": fields.number({
+            label: "Size (mm)",
             required: true,
             errorAfterField: true,
             cssClasses: {
-                label: ["form-label"]
+                label: ["form-label, mt-2"]
             }
         }) ,
         "weight": fields.number({
+            label: "Weight (g)",
             required: true,
             errorAfterField: true,
             cssClasses: {
-                label: ["form-label"]
+                label: ["form-label, mt-2"]
             }
         }),
         "depth": fields.number({
+            label: "Depth (m)",
             required: true,
             errorAfterField: true,
             cssClasses: {
-                label: ["form-label"]
-            }
+                label: ["form-label, mt-2"]
+            },
+            placeholder: "Please put 0 if not applicable"
         })
     })
 }
