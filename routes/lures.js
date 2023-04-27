@@ -169,4 +169,9 @@ router.get("/:lure_id/variant/create", async (req, res) => {
     })
 })
 
+router.post("/:lure_id/variant/create", async (req, res) => {
+    
+
+})
+
 module.exports = router;
