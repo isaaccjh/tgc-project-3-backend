@@ -86,3 +86,6 @@ const createLureForm = () => {
         // })
     })
 }
+
+
+module.exports = { createLureForm, bootstrapField };
