@@ -15,11 +15,71 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return null;
+  return db.createTable("variants", {
+    id: {
+      type: "int",
+      unsigned: true,
+      primaryKey: true,
+      autoIncrement: true,
+      notNull: true
+    },
+    lure_id :{
+      type: "int",
+      unsigned: true,
+      notNull: true,
+      foreignKey: {
+        name: "variants_lure_fk",
+        table: "lures",
+        rules: {
+          onDelete: "CASCADE",
+          onUpdate: "RESTRICT"
+        },
+        mapping: "id"
+      }
+    },
+    colour_id: {
+      type: "int",
+      unsigned: true,
+      notNull: true,
+      foreignKey: {
+        name: "variants_colour_fk",
+        table: "colours",
+        rules: {
+          onDelete: "CASCADE",
+          onUpdate: "RESTRICT"
+        },
+        mapping: "id"
+      }
+    },
+    property_id: {
+      type: "int",
+      unsigned: true,
+      notNull: true,
+      foreignKey: {
+        name: "variants_property_fk",
+        table: "properties",
+        rules: {
+          onDelete: "CASCADE",
+          onUpdate: "RESTRICT"
+        },
+        mapping: "id"
+      }
+    },
+    stock: {
+      type: "int",
+      unsigned: true,
+      notNull: true
+    },
+    cost: {
+      type: "decimal",
+      unsigned: true,
+      notNull: true
+    }
+  });
 };
 
 exports.down = function(db) {
-  return null;
+  return db.dropTable("variants");
 };
 
 exports._meta = {

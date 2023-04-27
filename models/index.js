@@ -4,6 +4,9 @@ const Lure = bookshelf.model("Lure", {
     tableName: "lures",
     serie() {
         return this.belongsTo("Serie", "serie_id")
+    },
+    variant() {
+        return this.belongsToMany("Variant")
     }
 });
 
@@ -15,11 +18,30 @@ const Serie = bookshelf.model("Serie", {
 })
 
 const Colour = bookshelf.model("Colour", {
-    tableName: "colours"
+    tableName: "colours",
+    variant() {
+        return this.belongsToMany("Variant")
+    }
 })
 
 const Property = bookshelf.model("Property", {
-    tableName: "properties"
+    tableName: "properties",
+    variant() {
+        return this.belongsToMany("Variant")
+    }
 })
 
-module.exports = { Lure, Serie }
+const Variant = bookshelf.model("Variant", {
+    tableName: "variants",
+    lure() {
+        return this.belongsToMany("Lure")
+    },
+    colour() {
+        return this.belongsToMany("Colour")
+    },
+    property() {
+        return this.belongsToMany("Property")
+    }
+})
+
+module.exports = { Lure, Serie, Colour, Property, Variant }

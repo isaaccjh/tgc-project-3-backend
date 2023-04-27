@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { Lure, Serie } = require("../models");
+const { Lure, Serie, Variant, Colour, Property } = require("../models");
 const { bootstrapField, createLureForm } = require("../forms");
 const { updateValues } = require("../helpers/updateForm")
 
@@ -132,6 +132,14 @@ router.post("/:lure_id/delete", async (req, res) => {
 
     await lure.destroy();
     res.redirect("/lures")
+})
+
+router.get("/:lure_id/variants", async (req, res) => {
+    const variants = Variant.where({
+        "lure_id": req.params.lure_id
+    }).fetch({
+        require: true
+    })
 })
 
 module.exports = router;
