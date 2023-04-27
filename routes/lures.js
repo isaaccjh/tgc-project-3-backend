@@ -91,4 +91,15 @@ router.get("/:lure_id/delete", async (req, res) => {
     })
 })
 
+router.post("/:lure_id/delete", async (req, res) => {
+    const lure = await Lure.where({
+        "id": req.params.lure_id
+    }).fetch({
+        require: true
+    })
+
+    await lure.destroy();
+    res.redirect("/lures")
+})
+
 module.exports = router;
