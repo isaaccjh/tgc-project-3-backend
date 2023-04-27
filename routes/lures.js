@@ -133,7 +133,6 @@ router.post("/:lure_id/delete", async (req, res) => {
 })
 
 router.get("/:lure_id/variants", async (req, res) => {
-
     let variants;
     try {
         variants = await Variant.where({
@@ -143,18 +142,20 @@ router.get("/:lure_id/variants", async (req, res) => {
         null;
     }
 
-
     const lure = await Lure.where({
         "id": req.params.lure_id
     }).fetch({
         require: true
     });
 
-
     res.render("lures/variants", {
         "lure": lure.toJSON(),
         "variants": variants?.toJSON()
     })
+})
+
+router.get("/:lure_id/variants/create", async (req, res) => {
+    
 })
 
 module.exports = router;

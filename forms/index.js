@@ -53,7 +53,7 @@ const createLureForm = (series) => {
             required: true,
             errorAfterField: true,
             cssClasses: {
-                label: ["form-label, mt-2"]
+                label: ["form-label, mt-2, disabled"]
             }
         }),
         "size": fields.number({
@@ -94,5 +94,42 @@ const createLureForm = (series) => {
     })
 }
 
+const createVariantForm = (colours, property) => {
+    return forms.create({
+        "colour_id": forms.string({
+            label: "Colour",
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label, mt-2"]
+            },
+            widget: widgets.select(),
+            choices: colours
+        }),
+        "property_id": forms.string({
+            label: "Property",
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label, mt-2"]
+            }
+        }),
+        "stock": forms.number({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label mt-2"]
+            }
+        }),
+        "cost": fields.number({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label mt-2"]
+            }
+        })
+    })
+}
 
-module.exports = { createLureForm, bootstrapField };
+
+module.exports = { createLureForm, createVariantForm, bootstrapField };
