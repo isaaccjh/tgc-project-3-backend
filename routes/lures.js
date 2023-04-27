@@ -79,4 +79,16 @@ router.post("/:lure_id/update", async (req, res) => {
     })
 })
 
+router.get("/:lure_id/delete", async (req, res) => {
+    const lure = await Lure.where({
+        "id": req.params.lure_id
+    }).fetch({
+        require: true
+    });
+
+    res.render("lures/delete", {
+        "lure": lure.toJSON()
+    })
+})
+
 module.exports = router;
