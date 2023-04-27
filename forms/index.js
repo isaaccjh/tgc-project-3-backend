@@ -75,15 +75,7 @@ const createLureForm = () => {
             cssClasses: {
                 label: ["form-label"]
             }
-        }),
-        // "image_url": fields.url({
-        //     required: true,
-        //     widget: widgets.hidden()
-        // }),
-        // "thumbnail_url": fields.url({
-        //     required: true,
-        //     widget: widgets.hidden()
-        // })
+        })
     })
 }
 
