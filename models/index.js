@@ -14,4 +14,12 @@ const Serie = bookshelf.model("Serie", {
     }
 })
 
+const Colour = bookshelf.model("Colour", {
+    tableName: "colours"
+})
+
+const Property = bookshelf.model("Property", {
+    tableName: "properties"
+})
+
 module.exports = { Lure, Serie }

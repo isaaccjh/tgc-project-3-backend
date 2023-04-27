@@ -89,7 +89,7 @@ router.post("/:lure_id/update", async (req, res) => {
         return [serie.get("id"), serie.get("name")]
     })
 
-    const lureForm = createLureForm();
+    const lureForm = createLureForm(allSeries);
     lureForm.handle(req, {
         "success": async (form) => {
             lure.set(form.data);
