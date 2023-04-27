@@ -137,7 +137,7 @@ router.get("/:lure_id/variant", async (req, res) => {
         require: true,
         withRelated: ["lure", "colour", "property"]
     })
-    console.log(variants.toJSON())
+
 
     const lure = await Lure.where({
         "id": req.params.lure_id
@@ -218,7 +218,6 @@ router.get("/:lure_id/variant/:variant_id/update", async (req, res) => {
     const variantForm = createVariantForm(allColours, allProperties, req.params.lure_id);
     updateValues(variantForm.fields, variant, ["colour_id", "property_id", "stock", "cost"])
 
-    console.log(variant.toJSON())
 
     res.render("variants/update", {
         "form": variantForm.toHTML(bootstrapField),
@@ -261,6 +260,20 @@ router.post("/:lure_id/variant/:variant_id/update", async (req, res) => {
                 "variant": variant.toJSON()
             })
         }
+    })
+})
+
+router.get("/:lure_id/variant/:variant_id/delete", async (req, res) => {
+    const variant = await Variant.where({
+        "id": req.params.variant_id
+    }).fetch({
+        require: true,
+        withRelated: ["lure", "property", "colour"]
+    })
+
+    
+    res.render("variants/delete", {
+        variant: variant.toJSON()
     })
 })
 

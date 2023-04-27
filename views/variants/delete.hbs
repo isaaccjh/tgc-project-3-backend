@@ -1,0 +1,15 @@
+{{#extends "base"}}
+{{#block "content"}}
+<div class="mt-3">
+    <span class="fs-4">Deleting {{variant.lure.name}}: Variant #{{variant.id}}</span>
+</div>
+<hr>
+<form method="POST">
+    <div class="alert alert-danger">
+        <p>Are you sure you want to delete {{variant.lure.name}}: Variant #{{variant.id}}?</p>
+        <input type="submit" class="btn btn-danger" value="Yes" />
+        <a href="/lures/{{variant.lure.id}}/variant" class="btn btn-success">No</a>
+    </div>
+</form>
+{{/block}}
+{{/extends}}
