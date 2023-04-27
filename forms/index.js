@@ -25,7 +25,7 @@ var bootstrapField = function (name, object) {
 };
 
 
-const createLureForm = () => {
+const createLureForm = (series) => {
     return forms.create({
         "name": fields.string({
             required: true,
@@ -79,6 +79,16 @@ const createLureForm = () => {
                 label: ["form-label, mt-2"]
             },
             placeholder: "Please put 0 if not applicable"
+        }),
+        "serie_id": fields.string({
+            label: "Series",
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label, mt-2']
+            },
+            widget: widgets.select(),
+            choices: series
         })
     })
 }
