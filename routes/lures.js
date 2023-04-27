@@ -130,7 +130,7 @@ router.post("/:lure_id/delete", async (req, res) => {
     res.redirect("/lures")
 })
 
-router.get("/:lure_id/variants", async (req, res) => {
+router.get("/:lure_id/variant", async (req, res) => {
     const variants = await Variant.collection().where({
         lure_id: req.params.lure_id
     }).fetch({
@@ -183,7 +183,7 @@ router.post("/:lure_id/variant/create", async (req, res) => {
         "success": async (form) => {
             const variant = new Variant(form.data);
             await variant.save();
-            res.redirect(`lures/${req.params.lure_id}/variants`)
+            res.redirect(`/lures/${req.params.lure_id}/variant`)
         },
         "error": () => {
             res.render("variants/create", {
@@ -197,6 +197,71 @@ router.post("/:lure_id/variant/create", async (req, res) => {
         }
     })
 
+})
+
+router.get("/:lure_id/variant/:variant_id/update", async (req, res) => {
+    const variant = await Variant.where({
+        "id": req.params.variant_id
+    }).fetch({
+        require: true,
+        withRelated: ["property", "colour", "lure"]
+    })
+
+    const allColours = await Colour.fetchAll().map(colour => {
+        return [colour.get("id"), colour.get("name")]
+    });
+
+    const allProperties = await Property.fetchAll().map(property => {
+        return [property.get("id"), property.get("name")]
+    });
+
+    const variantForm = createVariantForm(allColours, allProperties, req.params.lure_id);
+    updateValues(variantForm.fields, variant, ["colour_id", "property_id", "stock", "cost"])
+
+    console.log(variant.toJSON())
+
+    res.render("variants/update", {
+        "form": variantForm.toHTML(bootstrapField),
+        "variant": variant.toJSON()
+    })
+})
+
+router.post("/:lure_id/variant/:variant_id/update", async (req, res) => {
+    const variant = await Variant.where({
+        "id": req.params.variant_id
+    }).fetch({
+        require: true,
+        withRelated: ["property", "colour"]
+    });
+
+    const allColours = await Colour.fetchAll().map(colour => {
+        return [colour.get("id"), colour.get("name")]
+    });
+
+    const allProperties = await Property.fetchAll().map(property => {
+        return [property.get("id"), property.get("name")]
+    });
+
+    const variantForm = createVariantForm(allColours, allProperties, req.params.lure_id);
+    variantForm.handle(req, {
+        "success": async (form) => {
+            variant.set(form.data);
+            await variant.save();
+            res.redirect(`/lures/${req.params.lure_id}/variant`) 
+        },
+        "error": () => {
+            res.render("variants/create", {
+                "form": variantForm.toHTML(bootstrapField),
+                "variant": variant.toJSON()
+            })
+        },
+        "empty": () => {
+            res.render("variants/create", {
+                "form": variantForm.toHTML(bootstrapField),
+                "variant": variant.toJSON()
+            })
+        }
+    })
 })
 
 module.exports = router;
