@@ -162,7 +162,7 @@ router.get("/:lure_id/variant/create", async (req, res) => {
         return [property.get("id"), property.get("name")]
     });
 
-    const variantForm = createVariantForm(allColours, allProperties);
+    const variantForm = createVariantForm(allColours, allProperties, req.params.lure_id);
 
     res.render("variants/create", {
         "form": variantForm.toHTML(bootstrapField)
@@ -171,6 +171,32 @@ router.get("/:lure_id/variant/create", async (req, res) => {
 
 router.post("/:lure_id/variant/create", async (req, res) => {
     
+    const allColours = await Colour.fetchAll().map(colour => {
+        return [colour.get("id"), colour.get("name")]
+    });
+
+    const allProperties = await Property.fetchAll().map(property => {
+        return [property.get("id"), property.get("name")]
+    });
+
+    const variantForm = createVariantForm(allColours, allProperties, req.params.lure_id)
+    variantForm.handle(req, {
+        "success": async (form) => {
+            const variant = new Variant(form.data);
+            await variant.save();
+            res.redirect(`lures/${req.params.lure_id}/variants`)
+        },
+        "error": () => {
+            res.render("variants/create", {
+                "form": variantForm.toHTML(bootstrapField)
+            })
+        },
+        "empty": () => {
+            res.render("variants/create", {
+                "form": variantForm.toHTML(bootstrapField)
+            })
+        }
+    })
 
 })
 

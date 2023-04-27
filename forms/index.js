@@ -94,7 +94,7 @@ const createLureForm = (series) => {
     })
 }
 
-const createVariantForm = (colours, property) => {
+const createVariantForm = (colours, property, lure_id) => {
     return forms.create({
         "colour_id": fields.string({
             label: "Colour",
@@ -129,6 +129,12 @@ const createVariantForm = (colours, property) => {
             cssClasses: {
                 label: ["form-label mt-2"]
             }
+        }),
+        "lure_id": fields.number({
+            required: true,
+            errorAfterField: true,
+            widget: widgets.hidden(),
+            value: lure_id
         })
     })
 }
