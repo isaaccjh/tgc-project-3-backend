@@ -271,10 +271,21 @@ router.get("/:lure_id/variant/:variant_id/delete", async (req, res) => {
         withRelated: ["lure", "property", "colour"]
     })
 
-    
     res.render("variants/delete", {
         variant: variant.toJSON()
     })
+})
+
+router.post("/:lure_id/variant/:variant_id/delete", async (req, res) => {
+    const variant = await Variant.where({
+        "id": req.params.variant_id
+    }).fetch({
+        require: true
+    })
+
+    await variant.destroy();
+    res.redirect(`/lures/${req.params.lure_id}/variant`)
+
 })
 
 module.exports = router;
