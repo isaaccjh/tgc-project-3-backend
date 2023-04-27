@@ -55,16 +55,6 @@ exports.up = function(db) {
     depth: {
       type: "decimal",
       unsigned: true
-    },
-    image_url: {
-      type: "string",
-      length: 2048,
-      notNull: true
-    },
-    thumbnail_url: {
-      type: "string",
-      length: 2048,
-      notNull: true
     }
   });
 };

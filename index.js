@@ -21,7 +21,7 @@ const routes = {
 
 
 async function main () {
-    app.use("/", routes.lures)
+    app.use("/lures", routes.lures)
 }
 
 main();
