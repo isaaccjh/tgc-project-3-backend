@@ -39,7 +39,8 @@ const createLureForm = (series) => {
             errorAfterField: true,
             cssClasses: {
                 label: ["form-label, mt-2"]
-            }
+            },
+            widget: widgets.textarea()
         }),
         "hook": fields.string({
             required: true,

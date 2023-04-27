@@ -15,6 +15,7 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Series</th>
             <th>Hook</th>
             <th>Type</th>
             <th>Size</th>
@@ -25,13 +26,16 @@
         </tr>
     </thead>
     <tbody>
-        {{#each lures}}
+        {{#each lure}}
             <tr>
                 <td>
                     {{id}}
                 </td>
                 <td>
                     {{name}}
+                </td>
+                <td>
+                    {{this.serie.name}}
                 </td>
                 <td>
                     {{hook}}

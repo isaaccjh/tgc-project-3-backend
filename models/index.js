@@ -3,7 +3,7 @@ const bookshelf = require("../bookshelf");
 const Lure = bookshelf.model("Lure", {
     tableName: "lures",
     serie() {
-        return this.belongsTo("Serie")
+        return this.belongsTo("Serie", "serie_id")
     }
 });
 

@@ -6,10 +6,14 @@ const { bootstrapField, createLureForm } = require("../forms");
 const { updateValues } = require("../helpers/updateForm")
 
 router.get("/", async (req, res) => {
-    const lures = await Lure.collection().fetch();
+    const lure = await Lure.collection().fetch({
+        withRelated: ["serie"]
+    });
+
+    console.log(lure.toJSON());
 
     res.render("lures/index", {
-        "lures": lures.toJSON()
+        "lure": lure.toJSON()
     })
 });
 
@@ -19,6 +23,8 @@ router.get("/create", async (req, res) => {
     })
 
     const lureForm = createLureForm(allSeries);
+
+    console.log(allSeries)
 
     res.render("lures/create", {
         "form": lureForm.toHTML(bootstrapField)
@@ -57,9 +63,14 @@ router.get("/:lure_id/update", async (req, res) => {
         require: true
     });
 
-    const lureForm = createLureForm();
+    const allSeries = await Serie.fetchAll().map(serie => {
+        return [serie.get("id"), serie.get("name")]
+    });
 
-    updateValues(lureForm.fields, lure, ["name", "description", "hook", "type", "size", "weight", "depth"]);
+
+    const lureForm = createLureForm(allSeries);
+
+    updateValues(lureForm.fields, lure, ["name", "description", "hook", "type", "size", "weight", "depth", "serie_id"]);
 
     res.render("lures/update", {
         "form": lureForm.toHTML(bootstrapField),
@@ -73,6 +84,10 @@ router.post("/:lure_id/update", async (req, res) => {
     }).fetch({
         require: true
     });
+
+    const allSeries = await Serie.fetchAll().map(serie => {
+        return [serie.get("id"), serie.get("name")]
+    })
 
     const lureForm = createLureForm();
     lureForm.handle(req, {
