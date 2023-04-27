@@ -21,6 +21,7 @@
             <th>Weight</th>
             <th>Depth</th>
             <th>Description</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -49,6 +50,10 @@
                 </td>
                 <td>
                     {{description}}
+                </td>
+                <td>
+                   <a href="/lures/{{id}}/update" class="btn btn-primary btn-sm">Update</a>
+                <a href="/lures/{{id}}/delete" class="btn btn-danger btn-sm">Delete</a> 
                 </td>
             </tr>
         {{/each}}
