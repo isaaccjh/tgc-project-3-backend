@@ -11,6 +11,39 @@
     </div>
 </div>
 <hr>
-
+{{#if variants}}
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Colour</th>
+            <th>Property</th>
+            <th>Stock</th>
+            <th>Cost</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each variants}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{colour.name}}</td>
+            <td>{{property.name}}</td>
+            <td>{{stock}}</td>
+            <td>{{cost}}</td>
+            <td>
+                <div class="d-flex gap-1">
+                    <a href="/lures/{{id}}/variants" class="btn btn-success btn-sm"><i class="bi bi-eye"></i></a>
+                    <a href="/lures/{{id}}/update" class="btn btn-primary btn-sm"><i
+                            class="bi bi-pencil-square"></i></a>
+                    <a href="/lures/{{id}}/delete" class="btn btn-danger btn-sm "><i class="bi bi-trash3"></i></a>
+                </div>
+                </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{else}}
+{{/if}}
 {{/block}}
 {{/extends}}

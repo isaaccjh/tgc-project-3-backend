@@ -131,14 +131,13 @@ router.post("/:lure_id/delete", async (req, res) => {
 })
 
 router.get("/:lure_id/variants", async (req, res) => {
-    let variants;
-    try {
-        variants = await Variant.where({
-            "lure_id": req.params.lure_id
-        }).fetch()
-    } catch (e) {
-        null;
-    }
+    const variants = await Variant.collection().where({
+        lure_id: req.params.lure_id
+    }).fetch({
+        require: true,
+        withRelated: ["lure", "colour", "property"]
+    })
+    console.log(variants.toJSON())
 
     const lure = await Lure.where({
         "id": req.params.lure_id

@@ -20,27 +20,27 @@ const Serie = bookshelf.model("Serie", {
 const Colour = bookshelf.model("Colour", {
     tableName: "colours",
     variant() {
-        return this.belongsToMany("Variant")
+        return this.hasMany("Variant")
     }
 })
 
 const Property = bookshelf.model("Property", {
     tableName: "properties",
     variant() {
-        return this.belongsToMany("Variant")
+        return this.hasMany("Variant")
     }
 })
 
 const Variant = bookshelf.model("Variant", {
     tableName: "variants",
     lure() {
-        return this.belongsToMany("Lure")
+        return this.belongsTo("Lure")
     },
     colour() {
-        return this.belongsToMany("Colour")
+        return this.belongsTo("Colour")
     },
     property() {
-        return this.belongsToMany("Property")
+        return this.belongsTo("Property")
     }
 })
 
