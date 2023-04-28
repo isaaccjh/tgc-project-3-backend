@@ -3,6 +3,10 @@ const hbs = require("hbs");
 const wax = require("wax-on");
 require("dotenv").config();
 
+const session = require("express-session");
+const flash = require("connect-flash");
+const FileStore = require("session-file-store")(session);
+
 let app = express();
 
 app.set("view engine", "hbs");
@@ -14,6 +18,20 @@ wax.setLayoutPath("./views/layouts");
 app.use(express.urlencoded({
     extended: false
 }));
+
+app.use(session({
+    store: new FileStore(),
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true
+}));
+
+app.use(flash());
+app.use(function (req, res, next) {
+    res.locals.success_messages = req.flash("success_messages");
+    res.locals.error_messages = req.flash("error_messages");
+    next();
+})
 
 const routes = {
     lures: require("./routes/lures")

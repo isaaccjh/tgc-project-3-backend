@@ -134,7 +134,6 @@ router.get("/:lure_id/variant", async (req, res) => {
     const variants = await Variant.collection().where({
         lure_id: req.params.lure_id
     }).fetch({
-        require: true,
         withRelated: ["lure", "colour", "property"]
     })
 
