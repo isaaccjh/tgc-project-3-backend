@@ -37,6 +37,7 @@ router.post("/create", async (req, res) => {
         "success": async (form) => {
             const lure = new Lure(form.data)
             await lure.save();
+            req.flash("success_messages", `${lure.name} has been successfully created!`)
             res.redirect("/lures")
         },
         "error": () => {
@@ -90,6 +91,7 @@ router.post("/:lure_id/update", async (req, res) => {
         "success": async (form) => {
             lure.set(form.data);
             lure.save();
+            req.flash("success_messages", `${lure.name} has been successfully updated`)
             res.redirect("/lures")
         },
         "error": async (form) => {
@@ -127,6 +129,7 @@ router.post("/:lure_id/delete", async (req, res) => {
     })
 
     await lure.destroy();
+
     res.redirect("/lures")
 })
 
@@ -177,11 +180,19 @@ router.post("/:lure_id/variant/create", async (req, res) => {
         return [property.get("id"), property.get("name")]
     });
 
+    const lure = await Lure.where({
+        "id": req.params.lure_id
+    }).fetch({
+        require: true
+    })
+
     const variantForm = createVariantForm(allColours, allProperties, req.params.lure_id)
     variantForm.handle(req, {
         "success": async (form) => {
             const variant = new Variant(form.data);
             await variant.save();
+            console.log(lure)
+            req.flash("success_messages", `New variant of ${lure.toJSON().name} has been successfully created!`)
             res.redirect(`/lures/${req.params.lure_id}/variant`)
         },
         "error": () => {
@@ -245,6 +256,7 @@ router.post("/:lure_id/variant/:variant_id/update", async (req, res) => {
         "success": async (form) => {
             variant.set(form.data);
             await variant.save();
+            req.flash("success_messages", `Variant #${variant.id} has been successfully updated!`)
             res.redirect(`/lures/${req.params.lure_id}/variant`) 
         },
         "error": () => {
@@ -283,6 +295,7 @@ router.post("/:lure_id/variant/:variant_id/delete", async (req, res) => {
     })
 
     await variant.destroy();
+    req.flash("error_messages", `Variant #${variant.id} has been deleted`);
     res.redirect(`/lures/${req.params.lure_id}/variant`)
 
 })
