@@ -44,4 +44,8 @@ const Variant = bookshelf.model("Variant", {
     }
 })
 
-module.exports = { Lure, Serie, Colour, Property, Variant }
+const User = bookshelf.model("User", {
+    tableName: "users"
+})
+
+module.exports = { Lure, Serie, Colour, Property, Variant, User }
