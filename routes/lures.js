@@ -167,7 +167,10 @@ router.get("/:lure_id/variant/create", async (req, res) => {
     const variantForm = createVariantForm(allColours, allProperties, req.params.lure_id);
 
     res.render("variants/create", {
-        "form": variantForm.toHTML(bootstrapField)
+        "form": variantForm.toHTML(bootstrapField),
+        cloudinaryName: process.env.CLOUDINARY_NAME,
+        cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+        cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET
     })
 })
 

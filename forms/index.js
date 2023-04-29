@@ -135,6 +135,9 @@ const createVariantForm = (colours, property, lure_id) => {
             errorAfterField: true,
             widget: widgets.hidden(),
             value: lure_id
+        }),
+        "image_url": fields.string({
+            widget: widgets.hidden()
         })
     })
 }
