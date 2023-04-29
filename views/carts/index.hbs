@@ -8,8 +8,9 @@
     {{#each shoppingCart}}
     <li class="list-group-item my-3">
         <h5>{{this.variant.id}}</h5>
+        <h4>{{this.variant.lure.name}}</h4>
     </li>
     {{/each}}
 </ul>
 {{/block}}
-{{/base}}
+{{/extends}}

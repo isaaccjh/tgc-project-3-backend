@@ -6,9 +6,9 @@ const lureDataLayer = require("../dal/lures");
 
 router.get("/", async (req, res) => {
     let cart = new CartServices(req.session.user.id);
-    const getCart = await (cart.getCart()).toJSON();
+    const getCart = await (await cart.getCart()).toJSON()
     console.log(getCart)
-    res.render("cart/index", {
+    res.render("carts/index", {
         "shoppingCart": getCart
     })
 })

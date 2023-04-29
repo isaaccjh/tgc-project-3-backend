@@ -52,6 +52,9 @@ const CartItem = bookshelf.model("CartItem", {
     tableName: "cart_items",
     variant() {
         return this.belongsTo("Variant")
+    },
+    lure() {
+        return this.belongsTo("Lure")
     }
 })
 
