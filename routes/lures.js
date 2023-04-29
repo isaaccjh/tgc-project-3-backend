@@ -5,20 +5,10 @@ const { Lure, Serie, Variant, Colour, Property } = require("../models");
 const { bootstrapField, createLureForm, createVariantForm, createLureSearchForm } = require("../forms");
 const { updateValues } = require("../helpers/updateForm");
 const { checkIfAuthenticated } = require("../middlewares");
-
-// router.get("/", async (req, res) => {
-//     const lure = await Lure.collection().fetch({
-//         withRelated: ["serie"]
-//     });
-
-//     res.render("lures/index", {
-//         "lure": lure.toJSON()
-//     })
-// });
+const lureDataLayer = require("../dal/lures");
 
 router.get("/", async (req, res) => {
-    const allSeries = await Serie.fetchAll().map(s => [s.get("id"), s.get("name")]);
-
+    const allSeries = await lureDataLayer.getAllSeries();
     allSeries.unshift([0, "----"]);
 
     const searchForm = createLureSearchForm(allSeries);
@@ -97,9 +87,7 @@ router.get("/", async (req, res) => {
 })
 
 router.get("/create", checkIfAuthenticated, async (req, res) => {
-    const allSeries = await Serie.fetchAll().map(serie => {
-        return [serie.get("id"), serie.get("name")]
-    })
+    const allSeries = await lureDataLayer.getAllSeries()
 
     const lureForm = createLureForm(allSeries);
 
@@ -109,9 +97,7 @@ router.get("/create", checkIfAuthenticated, async (req, res) => {
 })
 
 router.post("/create", checkIfAuthenticated, async (req, res) => {
-    const allSeries = await Serie.fetchAll().map(serie => {
-        return [serie.get("id"), serie.get("name")]
-    })
+    const allSeries = await lureDataLayer.getAllSeries()
     const lureForm = createLureForm(allSeries);
 
     lureForm.handle(req, {
@@ -135,16 +121,9 @@ router.post("/create", checkIfAuthenticated, async (req, res) => {
 })
 
 router.get("/:lure_id/update", async (req, res) => {
-    const lure = await Lure.where({
-        "id": req.params.lure_id
-    }).fetch({
-        require: true
-    });
+    const lure = await lureDataLayer.getLureById(req.params.lure_id);
 
-    const allSeries = await Serie.fetchAll().map(serie => {
-        return [serie.get("id"), serie.get("name")]
-    });
-
+    const allSeries = await lureDataLayer.getAllSeries();
 
     const lureForm = createLureForm(allSeries);
 
@@ -157,15 +136,8 @@ router.get("/:lure_id/update", async (req, res) => {
 });
 
 router.post("/:lure_id/update", async (req, res) => {
-    const lure = await Lure.where({
-        "id": req.params.lure_id
-    }).fetch({
-        require: true
-    });
-
-    const allSeries = await Serie.fetchAll().map(serie => {
-        return [serie.get("id"), serie.get("name")]
-    })
+    const lure = await lureDataLayer.getLureById(req.params.lure_id);
+    const allSeries = await lureDataLayer.getAllSeries();
 
     const lureForm = createLureForm(allSeries);
     lureForm.handle(req, {
@@ -191,11 +163,7 @@ router.post("/:lure_id/update", async (req, res) => {
 })
 
 router.get("/:lure_id/delete", async (req, res) => {
-    const lure = await Lure.where({
-        "id": req.params.lure_id
-    }).fetch({
-        require: true
-    });
+    const lure = await lureDataLayer.getLureById(req.params.lure_id);
 
     res.render("lures/delete", {
         "lure": lure.toJSON()
@@ -203,30 +171,16 @@ router.get("/:lure_id/delete", async (req, res) => {
 })
 
 router.post("/:lure_id/delete", async (req, res) => {
-    const lure = await Lure.where({
-        "id": req.params.lure_id
-    }).fetch({
-        require: true
-    })
-
+    const lure = await lureDataLayer.getLureById(req.params.lure_id)
     await lure.destroy();
 
     res.redirect("/lures")
 })
 
 router.get("/:lure_id/variant", async (req, res) => {
-    const variants = await Variant.collection().where({
-        lure_id: req.params.lure_id
-    }).fetch({
-        withRelated: ["lure", "colour", "property"]
-    })
+    const variants = await lureDataLayer.getAllVariantsByLureId(req.params.lure_id);
 
-
-    const lure = await Lure.where({
-        "id": req.params.lure_id
-    }).fetch({
-        require: true
-    });
+    const lure = await lureDataLayer.getLureById(req.params.lure_id)
 
     res.render("variants/index", {
         "lure": lure.toJSON(),
@@ -236,14 +190,8 @@ router.get("/:lure_id/variant", async (req, res) => {
 
 router.get("/:lure_id/variant/create", async (req, res) => {
 
-    const allColours = await Colour.fetchAll().map(colour => {
-        return [colour.get("id"), colour.get("name")]
-    });
-
-    const allProperties = await Property.fetchAll().map(property => {
-        return [property.get("id"), property.get("name")]
-    });
-
+    const allColours = await lureDataLayer.getAllColours();
+    const allProperties = await lureDataLayer.getAllProperties();
     const variantForm = createVariantForm(allColours, allProperties, req.params.lure_id);
 
     res.render("variants/create", {
@@ -256,19 +204,10 @@ router.get("/:lure_id/variant/create", async (req, res) => {
 
 router.post("/:lure_id/variant/create", async (req, res) => {
 
-    const allColours = await Colour.fetchAll().map(colour => {
-        return [colour.get("id"), colour.get("name")]
-    });
+    const allColours = await lureDataLayer.getAllColours();
+    const allProperties = await lureDataLayer.getAllProperties();
 
-    const allProperties = await Property.fetchAll().map(property => {
-        return [property.get("id"), property.get("name")]
-    });
-
-    const lure = await Lure.where({
-        "id": req.params.lure_id
-    }).fetch({
-        require: true
-    })
+    const lure = await lureDataLayer.getLureById(req.params.lure_id);
 
     const variantForm = createVariantForm(allColours, allProperties, req.params.lure_id)
     variantForm.handle(req, {
@@ -293,20 +232,10 @@ router.post("/:lure_id/variant/create", async (req, res) => {
 })
 
 router.get("/:lure_id/variant/:variant_id/update", async (req, res) => {
-    const variant = await Variant.where({
-        "id": req.params.variant_id
-    }).fetch({
-        require: true,
-        withRelated: ["property", "colour", "lure"]
-    })
+    const variant = await lureDataLayer.getVariantById(req.params.variant_id);
 
-    const allColours = await Colour.fetchAll().map(colour => {
-        return [colour.get("id"), colour.get("name")]
-    });
-
-    const allProperties = await Property.fetchAll().map(property => {
-        return [property.get("id"), property.get("name")]
-    });
+    const allColours = await lureDataLayer.getAllColours();
+    const allProperties = await lureDataLayer.getAllProperties();
 
     const variantForm = createVariantForm(allColours, allProperties, req.params.lure_id);
     updateValues(variantForm.fields, variant, ["colour_id", "property_id", "stock", "cost", "image_url"])
@@ -322,21 +251,9 @@ router.get("/:lure_id/variant/:variant_id/update", async (req, res) => {
 })
 
 router.post("/:lure_id/variant/:variant_id/update", async (req, res) => {
-    const variant = await Variant.where({
-        "id": req.params.variant_id
-    }).fetch({
-        require: true,
-        withRelated: ["property", "colour"]
-    });
-
-    const allColours = await Colour.fetchAll().map(colour => {
-        return [colour.get("id"), colour.get("name")]
-    });
-
-    const allProperties = await Property.fetchAll().map(property => {
-        return [property.get("id"), property.get("name")]
-    });
-
+    const variant = await lureDataLayer.getVariantById(req.params.variant_id)
+    const allColours = await lureDataLayer.getAllColours();
+    const allProperties = await lureDataLayer.getAllProperties();
     const variantForm = createVariantForm(allColours, allProperties, req.params.lure_id);
 
     variantForm.handle(req, {
@@ -365,25 +282,14 @@ router.post("/:lure_id/variant/:variant_id/update", async (req, res) => {
 })
 
 router.get("/:lure_id/variant/:variant_id/delete", async (req, res) => {
-    const variant = await Variant.where({
-        "id": req.params.variant_id
-    }).fetch({
-        require: true,
-        withRelated: ["lure", "property", "colour"]
-    })
-
+    const variant = await lureDataLayer.getVariantById(req.params.variant_id)
     res.render("variants/delete", {
         variant: variant.toJSON()
     })
 })
 
 router.post("/:lure_id/variant/:variant_id/delete", async (req, res) => {
-    const variant = await Variant.where({
-        "id": req.params.variant_id
-    }).fetch({
-        require: true
-    })
-
+    const variant = await lureDataLayer.getVariantById(req.params.variant_id);
     await variant.destroy();
     req.flash("error_messages", `Variant has successfully been deleted`);
     res.redirect(`/lures/${req.params.lure_id}/variant`)
