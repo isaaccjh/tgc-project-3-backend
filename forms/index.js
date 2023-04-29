@@ -162,7 +162,7 @@ const createRegistrationForm = () => {
                 label: ["form-label, mt-2"]
             }
         }),
-        "contact_number": fields.number({
+        "contact_number": fields.string({
             required: true,
             errorAfterField: true,
             cssClasses: {

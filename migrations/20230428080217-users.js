@@ -39,8 +39,8 @@ exports.up = function(db) {
         notNull: true
       },
       contact_number: {
-        type: "smallint",
-        unsigned: true,
+        type: "string",
+        length: 45,
         notNull: true
       },
       email: {
