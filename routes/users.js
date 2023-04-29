@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { User } = require("../models")
 
-const { createRegistrationForm, bootstrapField } = require("../forms");
+const { createRegistrationForm, createLoginForm, bootstrapField } = require("../forms");
 
 router.get("/register", (req, res) => {
     const registerForm = createRegistrationForm();
@@ -16,7 +16,8 @@ router.post("/register", (req, res) => {
     const registerForm = createRegistrationForm();
     registerForm.handle(req, {
         "success": async (form) => {
-            const user = new User(form.data);
+            let { confirm_password, ...userData } = form.data
+            const user = new User(userData);
             await user.save();
             req.flash("success_messages", "User signed up successfully!");
             res.redirect("/users/login")
@@ -32,6 +33,15 @@ router.post("/register", (req, res) => {
             })
         }
     })
+})
+
+router.get("/login", (req, res) => {
+    const loginForm = createLoginForm();
+
+    res.render("users/login", {
+        "form": loginForm.toHTML(bootstrapField)
+    });
+
 })
 
 module.exports = router;

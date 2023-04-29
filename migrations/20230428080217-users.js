@@ -26,26 +26,27 @@ exports.up = function(db) {
       first_name: {
         type: "string",
         length: 100,
-        notNull: true
       },
       last_name: {
         type: "string",
         length: 100,
-        notNull: true
       },
       username: {
         type: "string",
         length: 100,
-        notNull: true
       },
       contact_number: {
         type: "string",
         length: 45,
-        notNull: true
       },
       email: {
         type: "string",
         length: 320,
+        notNull: true
+      },
+      password: {
+        type: "string",
+        length: 100,
         notNull: true
       }
   });
