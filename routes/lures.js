@@ -255,7 +255,7 @@ router.post("/:lure_id/variant/:variant_id/update", async (req, res) => {
         "success": async (form) => {
             variant.set(form.data);
             await variant.save();
-            req.flash("success_messages", `Variant #${variant.id} has been successfully updated!`)
+            req.flash("success_messages", `Variant #${variant.toJSON().id} has been successfully updated!`)
             res.redirect(`/lures/${req.params.lure_id}/variant`) 
         },
         "error": () => {
@@ -294,7 +294,7 @@ router.post("/:lure_id/variant/:variant_id/delete", async (req, res) => {
     })
 
     await variant.destroy();
-    req.flash("error_messages", `Variant #${variant.id} has been deleted`);
+    req.flash("error_messages", `Variant has successfully been deleted`);
     res.redirect(`/lures/${req.params.lure_id}/variant`)
 
 })

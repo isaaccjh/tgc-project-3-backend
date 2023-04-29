@@ -44,4 +44,47 @@ router.get("/login", (req, res) => {
 
 })
 
+router.post("/login", async (req, res) => {
+    const loginForm = createLoginForm();
+    loginForm.handle(req, {
+        "success": async (form) => {
+            let user = await User.where({
+                "email": form.data.email
+            }).fetch({
+                require: false
+            })
+
+            if (!user) {
+                req.flash("error_messages", "We could not find an account with that email")
+                res.redirect("/users/login")
+            } else {
+                if (user.get("password") === form.data.password) {
+                    req.session.user = {
+                        id: user.get("id"),
+                        email: user.get("email")
+                    }
+                    req.flash("success_messages", `Welcome back, ${user.get("username") === "" ? "User" : user.get("username")}!`)
+                    res.redirect("/users/profile")
+                    console.log('in')
+                } else {
+                    req.flash("error_messages", "Incorrect password")
+                    res.redirect("/users/login")
+                }
+            }
+        },
+        "error": (form) => {
+            req.flash("error_messages", "Error logging in, please try again.")
+            res.render("users/login", {
+                "form": form.toHTML(bootstrapField)
+            })
+        },
+        "empty": (form) => {
+            req.flash("error_messages", "Error logging in, please try again.")
+            res.render("users/login", {
+                "form": form.toHTML(bootstrapField)
+            })
+        }
+    })
+})
+
 module.exports = router;
