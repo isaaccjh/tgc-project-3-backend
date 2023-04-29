@@ -1,6 +1,7 @@
 const express = require("express");
 const hbs = require("hbs");
 const wax = require("wax-on");
+const csrf = require("csurf")
 require("dotenv").config();
 
 const session = require("express-session");
@@ -45,6 +46,7 @@ const routes = {
     users: require("./routes/users")
 }
 
+app.use(csrf())
 
 async function main () {
     app.use(function (req, res, next) {
@@ -52,7 +54,11 @@ async function main () {
         next();
     })
 
-    
+    app.use((req, res, next) => {
+        res.locals.csrfToken = req.csrfToken();
+        next();
+    })
+
     app.use("/lures", routes.lures);
     app.use("/users", routes.users);
 }

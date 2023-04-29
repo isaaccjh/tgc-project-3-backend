@@ -3,6 +3,7 @@
 <span class="mt-3 fs-4">Create a new Lure</span>
 <hr>
 <form method ="post">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
     {{{form}}}
     <a type="submit" href="/lures" class="btn btn-danger mt-3" >Cancel</a>
     <input type="submit" value="Add Lure" class="btn btn-primary mt-3" />
