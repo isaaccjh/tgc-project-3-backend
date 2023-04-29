@@ -37,7 +37,7 @@ router.post("/create", async (req, res) => {
         "success": async (form) => {
             const lure = new Lure(form.data)
             await lure.save();
-            req.flash("success_messages", `${lure.name} has been successfully created!`)
+            req.flash("success_messages", `${lure.toJSON().name} has been successfully created!`)
             res.redirect("/lures")
         },
         "error": () => {
