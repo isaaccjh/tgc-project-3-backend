@@ -2,19 +2,39 @@ const express = require("express");
 const router = express.Router();
 
 const { Lure, Serie, Variant, Colour, Property } = require("../models");
-const { bootstrapField, createLureForm, createVariantForm } = require("../forms");
+const { bootstrapField, createLureForm, createVariantForm, createLureSearchForm } = require("../forms");
 const { updateValues } = require("../helpers/updateForm");
 const { checkIfAuthenticated } = require("../middlewares");
 
-router.get("/", async (req, res) => {
-    const lure = await Lure.collection().fetch({
-        withRelated: ["serie"]
-    });
+// router.get("/", async (req, res) => {
+//     const lure = await Lure.collection().fetch({
+//         withRelated: ["serie"]
+//     });
 
-    res.render("lures/index", {
-        "lure": lure.toJSON()
+//     res.render("lures/index", {
+//         "lure": lure.toJSON()
+//     })
+// });
+
+router.get("/", async (req, res) => {
+    const allSeries = await Serie.fetchAll().map(s => [s.get("id"), s.get("name")]);
+
+    allSeries.unshift([0, "----"]);
+
+    const searchForm = createLureSearchForm(allSeries);
+    searchForm.handle(req, {
+        "success": async (form) => {
+
+        },
+        "error": async (form) => {
+
+        },
+        "empty": async (form) => {
+
+        }
     })
-});
+
+})
 
 router.get("/create", checkIfAuthenticated, async (req, res) => {
     const allSeries = await Serie.fetchAll().map(serie => {

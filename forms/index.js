@@ -215,12 +215,89 @@ const createLoginForm = () => {
     })
 }
 
+const createLureSearchForm = () => {
+    return forms.create({
+        "name": fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label"]
+            }
+        }),
+        "series": fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label"]
+            }
+        }),
+        "hook": fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label"]
+            }
+            
+        }),
+        "type": fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label"]
+            }
+        }),
+        "max_size": fields.number({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label"]
+            }
+        }),
+        "min_size": fields.number({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label"]
+            }
+        }),
+        "max_weight": fields.number({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label"]
+            }
+        }),
+        "min_weight": fields.number({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label"]
+            }
+        }),
+        "max_depth": fields.number({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label"]
+            }
+        }),
+        "min_depth": fields.number({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label"]
+            }
+        })
+        
+    })
+}
+
 
 module.exports = { 
     createLureForm, 
     createVariantForm, 
     bootstrapField, 
     createRegistrationForm,
-    createLoginForm
-
+    createLoginForm,
+    createLureSearchForm
  };
