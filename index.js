@@ -43,7 +43,8 @@ app.use(function (req, res, next) {
 
 const routes = {
     lures: require("./routes/lures"),
-    users: require("./routes/users")
+    users: require("./routes/users"),
+    cloudinary: require("./routes/cloudinary")
 }
 
 app.use(csrf());
@@ -69,6 +70,7 @@ async function main () {
 
     app.use("/lures", routes.lures);
     app.use("/users", routes.users);
+    app.use("/cloudinary", routes.cloudinary);
 }
 
 main();
