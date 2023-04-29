@@ -15,6 +15,10 @@ app.use(express.static("public"));
 wax.on(hbs.handlebars);
 wax.setLayoutPath("./views/layouts");
 
+const hbsHelpers = require("./helpers/handlebars");
+
+hbs.registerHelper(hbsHelpers);
+
 app.use(express.urlencoded({
     extended: false
 }));

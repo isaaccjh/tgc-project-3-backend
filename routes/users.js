@@ -61,11 +61,12 @@ router.post("/login", async (req, res) => {
                 if (user.get("password") === form.data.password) {
                     req.session.user = {
                         id: user.get("id"),
-                        email: user.get("email")
+                        email: user.get("email"),
+                        username: user.get("username")
                     }
                     req.flash("success_messages", `Welcome back, ${user.get("username") === "" ? "User" : user.get("username")}!`)
-                    res.redirect("/users/profile")
-                    console.log('in')
+                    res.redirect("/users/profile");
+                    console.log(req.session.user);
                 } else {
                     req.flash("error_messages", "Incorrect password")
                     res.redirect("/users/login")
@@ -85,6 +86,25 @@ router.post("/login", async (req, res) => {
             })
         }
     })
+});
+
+router.get("/profile", (req, res) => {
+    const user = req.session.user;
+    if (!user) {
+        req.flash("error_messages", "Please login first!")
+        res.redirect("/users/login")
+    } else {
+        res.render("users/profile", {
+            "user": user
+        })
+    }
+    
 })
 
+router.get("/logout", (req, res) => {
+    req.session.user = null;
+    req.flash("success_messages", "Logged out successfully.");
+    res.redirect("/users/login");
+    console.log(req.session.user)
+})
 module.exports = router;
