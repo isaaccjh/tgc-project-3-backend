@@ -34,12 +34,14 @@ app.use(function (req, res, next) {
 })
 
 const routes = {
-    lures: require("./routes/lures")
+    lures: require("./routes/lures"),
+    users: require("./routes/users")
 }
 
 
 async function main () {
-    app.use("/lures", routes.lures)
+    app.use("/lures", routes.lures);
+    app.use("/users", routes.users);
 }
 
 main();

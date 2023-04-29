@@ -139,5 +139,45 @@ const createVariantForm = (colours, property, lure_id) => {
     })
 }
 
+const createRegistrationForm = () => {
+    return forms.create({
+        "first_name": fields.string({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label, mt-2"]
+            }
+        }),
+        "last_name": fields.string({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label, mt-2"]
+            }
+        }),
+        "username": fields.string({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label, mt-2"]
+            }
+        }),
+        "contact_number": fields.number({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label, mt-2"]
+            }
+        }),
+        "email": fields.string({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label, mt-2"]
+            }
+        })
+    })
+}
 
-module.exports = { createLureForm, createVariantForm, bootstrapField };
+
+module.exports = { createLureForm, createVariantForm, bootstrapField, createRegistrationForm };

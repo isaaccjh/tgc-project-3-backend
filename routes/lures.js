@@ -191,7 +191,6 @@ router.post("/:lure_id/variant/create", async (req, res) => {
         "success": async (form) => {
             const variant = new Variant(form.data);
             await variant.save();
-            console.log(lure)
             req.flash("success_messages", `New variant of ${lure.toJSON().name} has been successfully created!`)
             res.redirect(`/lures/${req.params.lure_id}/variant`)
         },
