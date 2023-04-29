@@ -46,7 +46,15 @@ const routes = {
     users: require("./routes/users")
 }
 
-app.use(csrf())
+app.use(csrf());
+app.use(function (err, req, res, next) {
+    if (err && err.code == "EBADCSRFTOKEN") {
+        req.flash("error_messages", "The form has expired. Please try again");
+        res.redirect("back");
+    } else {
+        next();
+    }
+})
 
 async function main () {
     app.use(function (req, res, next) {
