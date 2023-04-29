@@ -22,15 +22,30 @@ router.get("/", async (req, res) => {
     allSeries.unshift([0, "----"]);
 
     const searchForm = createLureSearchForm(allSeries);
+    const q = Lure.collection();
     searchForm.handle(req, {
         "success": async (form) => {
-
+            if (form.data.name) {
+                q.where("name", "like", `%${form.data.name}%`)
+            }    
         },
         "error": async (form) => {
-
+            let lure = await q.fetch({
+                withRelated: ["serie"]
+            })
+            res.render("lures/index", {
+                "lure": lure.toJSON(),
+                "form": form.toHTML(bootstrapField)
+            })
         },
         "empty": async (form) => {
-
+            let lure = await q.fetch({
+                withRelated: ["serie"]
+            })
+            res.render("lures/index", {
+                "lure": lure.toJSON(),
+                "form": form.toHTML(bootstrapField)
+            })
         }
     })
 
