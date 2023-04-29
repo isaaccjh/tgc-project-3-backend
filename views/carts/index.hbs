@@ -1,0 +1,15 @@
+{{#extends "base"}}
+{{#block "content"}}
+<div class="mt-3">
+    <span class="fs-4">Your Shopping Cart</span>
+</div>
+<hr>
+<ul class="list-group">
+    {{#each shoppingCart}}
+    <li class="list-group-item my-3">
+        <h5>{{this.variant.id}}</h5>
+    </li>
+    {{/each}}
+</ul>
+{{/block}}
+{{/base}}
