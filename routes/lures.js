@@ -27,7 +27,52 @@ router.get("/", async (req, res) => {
         "success": async (form) => {
             if (form.data.name) {
                 q.where("name", "like", `%${form.data.name}%`)
-            }    
+            }
+
+            // if (form.data.series) {
+            //     q.query("join", "series", "lures.serie_id", "series.id")
+            //         .where("lures.name", "like", form.data.series)
+            // }
+
+            if (form.data.hook) {
+                q.where("hook", "like", `%${form.data.hook}%`)
+            }
+
+            if (form.data.type) {
+                q.where("type", "like", `%${form.data.type}%`)
+            }
+
+            if (form.data.min_size) {
+                q.where('size', '>=', form.data.min_size)
+            }
+
+            if (form.data.max_size) {
+                q = q.where('size', '<=', form.data.max_size);
+            }
+
+            if (form.data.min_weight) {
+                q.where('weight', '>=', form.data.min_weight)
+            }
+
+            if (form.data.max_weight) {
+                q = q.where('weight', '<=', form.data.max_weight);
+            }
+            if (form.data.min_depth) {
+                q.where('depth', '>=', form.data.min_depth)
+            }
+
+            if (form.data.max_depth) {
+                q = q.where('depth', '<=', form.data.max_depth);
+            }
+
+            let lures = await q.fetch({
+                withRelated: ["serie"]
+            })
+
+            res.render("lures/index", {
+                "lure": lures.toJSON(),
+                "form": form.toHTML(bootstrapField)
+            })
         },
         "error": async (form) => {
             let lure = await q.fetch({
@@ -63,7 +108,7 @@ router.get("/create", checkIfAuthenticated, async (req, res) => {
     })
 })
 
-router.post("/create", checkIfAuthenticated,  async (req, res) => {
+router.post("/create", checkIfAuthenticated, async (req, res) => {
     const allSeries = await Serie.fetchAll().map(serie => {
         return [serie.get("id"), serie.get("name")]
     })
@@ -210,7 +255,7 @@ router.get("/:lure_id/variant/create", async (req, res) => {
 })
 
 router.post("/:lure_id/variant/create", async (req, res) => {
-    
+
     const allColours = await Colour.fetchAll().map(colour => {
         return [colour.get("id"), colour.get("name")]
     });
@@ -293,24 +338,24 @@ router.post("/:lure_id/variant/:variant_id/update", async (req, res) => {
     });
 
     const variantForm = createVariantForm(allColours, allProperties, req.params.lure_id);
-   
+
     variantForm.handle(req, {
         "success": async (form) => {
             console.log(form.data)
             variant.set(form.data);
             await variant.save();
             req.flash("success_messages", `Variant #${variant.toJSON().id} has been successfully updated!`)
-            res.redirect(`/lures/${req.params.lure_id}/variant`) 
+            res.redirect(`/lures/${req.params.lure_id}/variant`)
         },
         "error": (form) => {
-            console.log("error",form.data)
+            console.log("error", form.data)
             res.render("variants/create", {
                 "form": variantForm.toHTML(bootstrapField),
                 "variant": variant.toJSON()
             })
         },
         "empty": (form) => {
-            console.log("empty",form.data)
+            console.log("empty", form.data)
             res.render("variants/create", {
                 "form": variantForm.toHTML(bootstrapField),
                 "variant": variant.toJSON()

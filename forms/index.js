@@ -215,7 +215,7 @@ const createLoginForm = () => {
     })
 }
 
-const createLureSearchForm = () => {
+const createLureSearchForm = (series) => {
     return forms.create({
         "name": fields.string({
             required: false,
@@ -229,7 +229,9 @@ const createLureSearchForm = () => {
             errorAfterField: true,
             cssClasses: {
                 label: ["form-label"]
-            }
+            },
+            widget: widgets.select(),
+            choices: series
         }),
         "hook": fields.string({
             required: false,
