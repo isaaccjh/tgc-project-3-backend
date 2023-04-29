@@ -15,7 +15,10 @@ const getHashedPassword = (password) => {
 router.get("/register", (req, res) => {
     const registerForm = createRegistrationForm();
     res.render("users/register", {
-        "form": registerForm.toHTML(bootstrapField)
+        "form": registerForm.toHTML(bootstrapField),
+        cloudinaryName: process.env.CLOUDINARY_NAME,
+        cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+        cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET
     })
 })
 

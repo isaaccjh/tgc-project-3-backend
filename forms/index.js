@@ -186,6 +186,9 @@ const createRegistrationForm = () => {
             cssClasses: {
                 label: ["form-label, mt-2"]
             }
+        }),
+        "profile_picture": fields.string({
+            widget: widgets.hidden()
         })
     })
 }
