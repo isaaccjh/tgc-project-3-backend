@@ -229,12 +229,15 @@ router.get("/:lure_id/variant/:variant_id/update", async (req, res) => {
     });
 
     const variantForm = createVariantForm(allColours, allProperties, req.params.lure_id);
-    updateValues(variantForm.fields, variant, ["colour_id", "property_id", "stock", "cost"])
+    updateValues(variantForm.fields, variant, ["colour_id", "property_id", "stock", "cost", "image_url"])
 
 
     res.render("variants/update", {
         "form": variantForm.toHTML(bootstrapField),
-        "variant": variant.toJSON()
+        "variant": variant.toJSON(),
+        cloudinaryName: process.env.CLOUDINARY_NAME,
+        cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+        cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET
     })
 })
 
