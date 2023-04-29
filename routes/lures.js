@@ -3,7 +3,8 @@ const router = express.Router();
 
 const { Lure, Serie, Variant, Colour, Property } = require("../models");
 const { bootstrapField, createLureForm, createVariantForm } = require("../forms");
-const { updateValues } = require("../helpers/updateForm")
+const { updateValues } = require("../helpers/updateForm");
+const { checkIfAuthenticated } = require("../middlewares");
 
 router.get("/", async (req, res) => {
     const lure = await Lure.collection().fetch({
@@ -15,7 +16,7 @@ router.get("/", async (req, res) => {
     })
 });
 
-router.get("/create", async (req, res) => {
+router.get("/create", checkIfAuthenticated, async (req, res) => {
     const allSeries = await Serie.fetchAll().map(serie => {
         return [serie.get("id"), serie.get("name")]
     })
@@ -27,7 +28,7 @@ router.get("/create", async (req, res) => {
     })
 })
 
-router.post("/create", async (req, res) => {
+router.post("/create", checkIfAuthenticated,  async (req, res) => {
     const allSeries = await Serie.fetchAll().map(serie => {
         return [serie.get("id"), serie.get("name")]
     })
