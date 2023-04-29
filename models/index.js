@@ -46,6 +46,13 @@ const Variant = bookshelf.model("Variant", {
 
 const User = bookshelf.model("User", {
     tableName: "users"
+});
+
+const CartItem = bookshelf.model("CartItem", {
+    tableName: "cart_items",
+    variant() {
+        return this.belongsTo("Variant")
+    }
 })
 
-module.exports = { Lure, Serie, Colour, Property, Variant, User }
+module.exports = { Lure, Serie, Colour, Property, Variant, User, CartItem }
