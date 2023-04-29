@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { Lure, Serie, Variant, Colour, Property } = require("../models");
+const { Lure, Variant } = require("../models");
 const { bootstrapField, createLureForm, createVariantForm, createLureSearchForm } = require("../forms");
 const { updateValues } = require("../helpers/updateForm");
 const { checkIfAuthenticated } = require("../middlewares");
