@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
     })
 })
 
-router.get("/:lure_id/variant/:variant_id", async (req, res) => {
+router.get("/:lure_id/variant/:variant_id/add", async (req, res) => {
     let cart = new CartServices(req.session.user.id);
     await cart.addToCart(req.params.variant_id, 1);
     req.flash("success_messages", "Added to cart");
