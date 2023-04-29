@@ -36,7 +36,9 @@ app.use(function (req, res, next) {
     res.locals.success_messages = req.flash("success_messages");
     res.locals.error_messages = req.flash("error_messages");
     next();
-})
+});
+
+
 
 const routes = {
     lures: require("./routes/lures"),
@@ -45,6 +47,12 @@ const routes = {
 
 
 async function main () {
+    app.use(function (req, res, next) {
+        res.locals.user = req.session.user;
+        next();
+    })
+
+    
     app.use("/lures", routes.lures);
     app.use("/users", routes.users);
 }
