@@ -7,8 +7,17 @@
 <ul class="list-group">
     {{#each shoppingCart}}
     <li class="list-group-item my-3">
-        <h5>{{this.variant.id}}</h5>
-        <h4>{{this.variant.lure.name}}</h4>
+        <h4>{{this.variant.lure.name}}: Variant #{{this.variant.id}}</h4>
+        <h5>Cost: ${{this.variant.cost}}</h5>
+        <form action="/cart/variant/{{this.variant.id}}/quantity/update" method="post">
+            <input type="hidden" value="{{../csrfToken}}" name="_csrf" />
+            <h5 class="d-flex">
+                Quantity: <input type="number" name="newQuantity" value="{{this.quantity}}" class="mx-2"
+                    stye="width:10%" />
+                <input type="submit" value="Update Quantity" class="btn btn-success btn-sm" class="mt-1" />
+            </h5>
+        </form>
+        <a href="/cart/variant/{{this.variant.id}}/remove" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
     </li>
     {{/each}}
 </ul>
