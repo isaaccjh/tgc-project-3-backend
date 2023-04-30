@@ -49,7 +49,16 @@ const routes = {
     checkout: require("./routes/checkout")
 }
 
-app.use(csrf());
+// app.use(csrf());
+const csurfInstance = csurf();
+app.use(function (req, res, next) {
+    console.log("checking for csrf exclusion")
+    if (req.url === "/checkout/process_payment") {
+        return next()
+    }
+    csurfInstance(req, res, next);
+})
+
 app.use(function (err, req, res, next) {
     if (err && err.code == "EBADCSRFTOKEN") {
         req.flash("error_messages", "The form has expired. Please try again");
@@ -66,7 +75,9 @@ async function main () {
     })
 
     app.use((req, res, next) => {
-        res.locals.csrfToken = req.csrfToken();
+        if (req.csrfToken) {
+            res.locals.csrfToken = req.csrfToken();
+        }
         next();
     })
 
