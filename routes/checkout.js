@@ -47,7 +47,7 @@ router.get("/", async (req, res) => {
         shipping_address_collection: {
             allowed_countries: ["SG"]
         },
-        billing_address_collection: "auto",
+        billing_address_collection: "required",
         invoice_creation: {
             enabled: true
         },
@@ -119,7 +119,12 @@ router.post("/process_payment", express.raw({ type: "application/json" }),
         }
         if (event.type == "checkout.session.completed") {
             let stripeSession = event.data.object;
-            console.log("stripeSession:", stripeSession);
+            const sessionId = stripeSession.id;
+            
+            const paymentIntent = await Stripe.paymentIntents.retrieve(stripeSession.payment_intent);
+
+            console.log(paymentIntent);
+
         }
         res.send({ received: true });
       
