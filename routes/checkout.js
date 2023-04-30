@@ -4,6 +4,8 @@ const router = express.Router();
 const CartServices = require("../services/cart_services");
 const Stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
+const orderDataLayer = require("../dal/orders");
+
 router.get("/", async (req, res) => {
     const cart = new CartServices(req.session.user.id);
     let items = await cart.getCart();
@@ -136,7 +138,6 @@ router.post("/process_payment", express.raw({ type: "application/json" }),
             // const orderData = {
 
             // }
-
         }
         res.send({ received: true });
 
