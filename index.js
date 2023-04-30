@@ -46,7 +46,8 @@ const routes = {
     users: require("./routes/users"),
     cloudinary: require("./routes/cloudinary"),
     shoppingCart: require("./routes/shoppingCart"),
-    checkout: require("./routes/checkout")
+    checkout: require("./routes/checkout"),
+    orders: require("./routes/orders")
 }
 
 // app.use(csrf());
@@ -86,6 +87,7 @@ async function main () {
     app.use("/cloudinary", routes.cloudinary);
     app.use("/cart", routes.shoppingCart);
     app.use("/checkout", routes.checkout);
+    app.use("/orders", routes.orders)
 }
 
 main();

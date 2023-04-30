@@ -4,6 +4,9 @@ const router = express.Router();
 const CartServices = require("../services/cart_services");
 const Stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
+
+
+const { getOrderData } = require("../helpers/getOrderData");
 const orderDataLayer = require("../dal/orders");
 
 router.get("/", async (req, res) => {
@@ -31,6 +34,7 @@ router.get("/", async (req, res) => {
         }
         lineItems.push(lineItem);
         meta.push({
+            "user_id": req.session.user.id,
             "variant_id": i.get("variant_id"),
             "quantity": i.get("quantity")
         })
@@ -121,23 +125,15 @@ router.post("/process_payment", express.raw({ type: "application/json" }),
         }
         if (event.type == "checkout.session.completed") {
             let stripeSession = event.data.object;
-
             const paymentIntent = await Stripe.paymentIntents.retrieve(stripeSession.payment_intent);
+            
+            console.log(JSON.parse(stripeSession.metadata.orders))
+            const userId = (JSON.parse(stripeSession.metadata.orders))[0].user_id
+            let orderData = getOrderData(userId, stripeSession, paymentIntent);
 
-            console.log(paymentIntent);
-            console.log("User ID =>", req.session.user.id);
-            console.log("Order Status ID =>", "Order Status ID: 2 ");
-            console.log("Payment Type =>", paymentIntent.payment_method_types[0]);
-            console.log("Billing Address =>", stripeSession.customer_details);
-            console.log("Shipping Address =>", stripeSession.shipping_details);
-            console.log("Total Cost =>", stripeSession.amount_total);
-            console.log("Order Date =>", stripeSession.created);
-
-            // let orderData be an object that can create new Order,
-            // need to extract all data from payment intent
-            // const orderData = {
-
-            // }
+            const newOrder = await orderDataLayer.addOrder(orderData);
+            console.log(newOrder);
+            
         }
         res.send({ received: true });
 
