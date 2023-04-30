@@ -43,7 +43,54 @@ router.get("/", async (req, res) => {
         cancel_url: process.env.STRIPE_SUCCESS_URL,
         metadata: {
             "orders": metaData
-        }
+        },
+        shipping_address_collection: {
+            allowed_countries: ["SG"]
+        },
+        billing_address_collection: "auto",
+        invoice_creation: true,
+        shipping_options: [
+            {
+                shipping_rate_data: {
+                    display_name: "Standard",
+                    type: "fixed_amount",
+                    fixed_amount: {
+                        amount: 300,
+                        currency: "sgd"
+                    },
+                    delivery_estimate: {
+                        minimum: {
+                            unit: business_day,
+                            value: 4
+                        },
+                        maximum: {
+                            unit: business_day,
+                            value: 7
+                        }
+                    }
+                }
+            },
+            {
+                shipping_rate_data: {
+                    display_name: "Express",
+                    type: "fixed_amount",
+                    fixed_amount: {
+                        amount: 500,
+                        currency: "sgd"
+                    },
+                    delivery_estimate: {
+                        minimum: {
+                            unit: business_day,
+                            value: 1
+                        },
+                        maximum: {
+                            unit: business_day,
+                            value: 3
+                        }
+                    }
+                }
+            }
+        ]
     }
 
     let stripeSession = await Stripe.checkout.sessions.create(payment);
@@ -52,10 +99,10 @@ router.get("/", async (req, res) => {
         "publishableKey": process.env.STRIPE_PUBLISHABLE_KEY
     })
 
-    
+
 })
 
-router.post("/process_payment", express.raw({type: "application/json"}), 
+router.post("/process_payment", express.raw({ type: "application/json" }),
     async (req, res) => {
         let payload = req.body;
         let endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
@@ -74,7 +121,7 @@ router.post("/process_payment", express.raw({type: "application/json"}),
             console.log(stripeSession);
         }
         res.send({ received: true })
-    }    
+    }
 )
 
 module.exports = router;
