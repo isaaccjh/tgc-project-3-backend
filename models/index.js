@@ -45,7 +45,10 @@ const Variant = bookshelf.model("Variant", {
 })
 
 const User = bookshelf.model("User", {
-    tableName: "users"
+    tableName: "users",
+    order() {
+        return this.hasMany("Order")
+    }
 });
 
 const CartItem = bookshelf.model("CartItem", {
@@ -58,4 +61,32 @@ const CartItem = bookshelf.model("CartItem", {
     }
 })
 
-module.exports = { Lure, Serie, Colour, Property, Variant, User, CartItem }
+const OrderStatus = bookshelf.model("OrderStatus", {
+    tableName: "order_statuses",
+    order() {
+        return this.hasMany("Order")
+    }
+})
+
+const Order = bookshelf.model("Order", {
+    tableName: "orders",
+    order_status() {
+        return this.belongsTo("OrderStatus")
+    },
+    user() {
+        return this.belongsTo("User")
+    }
+
+})
+
+module.exports = { 
+    Lure, 
+    Serie, 
+    Colour, 
+    Property, 
+    Variant, 
+    User, 
+    CartItem,
+    Order,
+    OrderStatus
+ }
