@@ -78,6 +78,10 @@ const Order = bookshelf.model("Order", {
     }
 })
 
+const OrderItem = bookshelf.model("OrderItem", {
+    tableName: "orders_items"
+})
+
 module.exports = { 
     Lure, 
     Serie, 

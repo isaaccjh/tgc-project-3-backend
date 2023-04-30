@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
         const lineItem = {
             "quantity": i.get("quantity"),
             "price_data": {
-                "currency": "SGD",
+                "currency": "sgd",
                 "unit_amount": i.related("variant").get("cost"),
                 "product_data": {
                     "name": i.related("variant").toJSON().lure.name
@@ -119,15 +119,27 @@ router.post("/process_payment", express.raw({ type: "application/json" }),
         }
         if (event.type == "checkout.session.completed") {
             let stripeSession = event.data.object;
-            const sessionId = stripeSession.id;
-            
+
             const paymentIntent = await Stripe.paymentIntents.retrieve(stripeSession.payment_intent);
 
             console.log(paymentIntent);
+            console.log("User ID =>", req.session.user.id);
+            console.log("Order Status ID =>", "Order Status ID: 2 ");
+            console.log("Payment Type =>", paymentIntent.payment_method_types[0]);
+            console.log("Billing Address =>", stripeSession.customer_details);
+            console.log("Shipping Address =>", stripeSession.shipping_details);
+            console.log("Total Cost =>", stripeSession.amount_total);
+            console.log("Order Date =>", stripeSession.created);
+
+            // let orderData be an object that can create new Order,
+            // need to extract all data from payment intent
+            // const orderData = {
+
+            // }
 
         }
         res.send({ received: true });
-      
+
     }
 )
 
