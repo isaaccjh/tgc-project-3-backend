@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const CartServices = require("../services/cart_services");
-const Stripe = require("stripe")("process.env.STRIPE_SECRET_KEY");
+const Stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 router.get("/", async (req, res) => {
     const cart = new CartServices(req.session.user.id);
@@ -12,16 +12,13 @@ router.get("/", async (req, res) => {
     let meta = [];
 
     for (let i of items) {
-        console.log("i:", i)
-        console.log("i.related('lure'):", i.related('lure'))
-        console.log("i.related('variant'):", i.related('variant'))
         const lineItem = {
             "quantity": i.get("quantity"),
             "price_data": {
                 "currency": "SGD",
                 "unit_amount": i.related("variant").get("cost"),
                 "product_data": {
-                    "name": i.related("lure").get("name")
+                    "name": i.related("variant").toJSON().lure.name
                 }
             }
         }
@@ -57,5 +54,27 @@ router.get("/", async (req, res) => {
 
     
 })
+
+router.post("/process_payment", express.raw({type: "application/json"}), 
+    async (req, res) => {
+        let payload = req.body;
+        let endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
+        let sigHeader = req.headers["stripe-signature"];
+        let event;
+        try {
+            event = Stripe.webhooks.constructEvent(payload, sigHeader, endpointSecret);
+        } catch (e) {
+            res.send({
+                "error": e.message
+            })
+            console.log(e.message)
+        }
+        if (event.type == "checkout.session.completed") {
+            let stripeSession = event.data.object;
+            console.log(stripeSession);
+        }
+        res.send({ received: true })
+    }    
+)
 
 module.exports = router;

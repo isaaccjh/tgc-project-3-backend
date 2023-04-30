@@ -45,7 +45,8 @@ const routes = {
     lures: require("./routes/lures"),
     users: require("./routes/users"),
     cloudinary: require("./routes/cloudinary"),
-    shoppingCart: require("./routes/shoppingCart")
+    shoppingCart: require("./routes/shoppingCart"),
+    checkout: require("./routes/checkout")
 }
 
 app.use(csrf());
@@ -72,7 +73,8 @@ async function main () {
     app.use("/lures", routes.lures);
     app.use("/users", routes.users);
     app.use("/cloudinary", routes.cloudinary);
-    app.use("/cart", routes.shoppingCart)
+    app.use("/cart", routes.shoppingCart);
+    app.use("/checkout", routes.checkout);
 }
 
 main();
