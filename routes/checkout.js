@@ -45,10 +45,12 @@ router.get("/", async (req, res) => {
             "orders": metaData
         },
         shipping_address_collection: {
-            allowed_countries: ["SG"]
+            allowed_countries: ["SG", "AU", "MY"]
         },
         billing_address_collection: "auto",
-        invoice_creation: true,
+        invoice_creation: {
+            enabled: true
+        },
         shipping_options: [
             {
                 shipping_rate_data: {
@@ -60,11 +62,11 @@ router.get("/", async (req, res) => {
                     },
                     delivery_estimate: {
                         minimum: {
-                            unit: business_day,
+                            unit: "business_day",
                             value: 4
                         },
                         maximum: {
-                            unit: business_day,
+                            unit: "business_day",
                             value: 7
                         }
                     }
@@ -80,11 +82,11 @@ router.get("/", async (req, res) => {
                     },
                     delivery_estimate: {
                         minimum: {
-                            unit: business_day,
+                            unit: "business_day",
                             value: 1
                         },
                         maximum: {
-                            unit: business_day,
+                            unit: "business_day",
                             value: 3
                         }
                     }
@@ -98,7 +100,7 @@ router.get("/", async (req, res) => {
         "sessionId": stripeSession.id,
         "publishableKey": process.env.STRIPE_PUBLISHABLE_KEY
     })
-
+    console.log(stripeSession)
 
 })
 
