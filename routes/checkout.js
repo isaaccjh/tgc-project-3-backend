@@ -45,7 +45,7 @@ router.get("/", async (req, res) => {
             "orders": metaData
         },
         shipping_address_collection: {
-            allowed_countries: ["SG", "AU", "MY"]
+            allowed_countries: ["SG"]
         },
         billing_address_collection: "auto",
         invoice_creation: {
@@ -100,7 +100,6 @@ router.get("/", async (req, res) => {
         "sessionId": stripeSession.id,
         "publishableKey": process.env.STRIPE_PUBLISHABLE_KEY
     })
-    console.log(stripeSession)
 
 })
 
@@ -120,9 +119,10 @@ router.post("/process_payment", express.raw({ type: "application/json" }),
         }
         if (event.type == "checkout.session.completed") {
             let stripeSession = event.data.object;
-            console.log(stripeSession);
+            console.log("stripeSession:", stripeSession);
         }
-        res.send({ received: true })
+        res.send({ received: true });
+      
     }
 )
 
