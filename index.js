@@ -50,7 +50,7 @@ const routes = {
 }
 
 // app.use(csrf());
-const csurfInstance = csurf();
+const csurfInstance = csrf();
 app.use(function (req, res, next) {
     console.log("checking for csrf exclusion")
     if (req.url === "/checkout/process_payment") {
