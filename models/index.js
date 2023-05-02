@@ -48,6 +48,9 @@ const User = bookshelf.model("User", {
     tableName: "users",
     order() {
         return this.hasMany("Order")
+    },
+    role() {
+        return this.belongsTo("Role")
     }
 });
 
@@ -82,6 +85,13 @@ const OrderItem = bookshelf.model("OrderItem", {
     tableName: "orders_items"
 })
 
+const Role = bookshelf.model("Role", {
+    tableName: "roles",
+    user() {
+        return this.hasMany("User")
+    }
+})
+
 module.exports = { 
     Lure, 
     Serie, 
@@ -91,5 +101,6 @@ module.exports = {
     User, 
     CartItem,
     Order,
-    OrderStatus
+    OrderStatus,
+    Role
  }
