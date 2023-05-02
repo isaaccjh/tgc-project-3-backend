@@ -1,9 +1,40 @@
 {{#extends "base"}}
 {{#block "content"}}
-<div class="mt-3">
-    <span class="fs-4">Shopping Cart</span>
+<div class="container d-flex justify-content-between mt-3">
+    <div>
+        <span class="fs-4">Order Details</span>
+    </div>
+    <div class="d-flex align-items-lg-center mt-3 mt-lg-0">
+        <a href="#" style="font-size: 16px;" class="btn btn-sm btn-primary">
+            Receipt
+        </a>
+    </div>
 </div>
 <hr>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>Lure</th>
+            <th>Colour</th>
+            <th>Property</th>
+            <th>Cost</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each orders}}
+            <tr>
+                {{!-- <td><img src="{{thumbnail_url}}"></td> --}}
+                <td>{{variant.lure.name}}</td>
+                <td>{{colour.name}}</td>
+                <td>{{property.name}}</td>
+                <td>${{toDollars variant.cost}}</td>
+                <td>{{this.quantity}}</td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
 
 
 
