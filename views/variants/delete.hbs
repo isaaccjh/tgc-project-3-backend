@@ -5,6 +5,7 @@
 </div>
 <hr>
 <form method="POST">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}" />
     <div class="alert alert-danger">
         <p>Are you sure you want to delete {{variant.lure.name}}: Variant #{{variant.id}}?</p>
         <input type="submit" class="btn btn-danger" value="Yes" />

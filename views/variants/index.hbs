@@ -28,11 +28,11 @@
         {{#each variants}}
         <tr>
             <td>{{id}}</td>
-            <td><img src="{{image_url}}" /></td>
+            <td><img src="{{thumbnail_url}}" /></td>
             <td>{{colour.name}}</td>
             <td>{{property.name}}</td>
             <td>{{stock}}</td>
-            <td>${{cost}}</td>
+            <td>${{toDollars cost}}</td>
             <td>
                 <div class="d-flex gap-1">
                     <a href="/cart/variant/{{id}}/add" class="btn btn-success btn-sm"><i class="bi bi-cart-plus"></i></a>

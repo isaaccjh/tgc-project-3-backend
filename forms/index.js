@@ -138,6 +138,9 @@ const createVariantForm = (colours, property, lure_id) => {
         }),
         "image_url": fields.string({
             widget: widgets.hidden()
+        }),
+        "thumbnail_url": fields.string({
+            widget: widgets.hidden()
         })
     })
 }

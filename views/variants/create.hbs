@@ -44,10 +44,13 @@ var myWidget = cloudinary.createUploadWidget({
       // hide the upload widget 
       document.querySelector('#upload_widget').style.display="none";
 
-      // display the image
+      // display the thumbnail image
       document.querySelector('#id_image_url').value = result.info.url;
-      document.querySelector('#uploaded_image').src = result.info.url;
+      document.querySelector('#uploaded_image').src = result.info.thumbnail_url;
       document.querySelector('#uploaded_image').style.display = 'inline';
+
+      // insert thumbnail image 
+      document.querySelector("#id_thumbnail_url").value = result.info.thumbnail_url
     }
   }
 )

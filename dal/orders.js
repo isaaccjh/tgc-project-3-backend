@@ -4,7 +4,6 @@ const getAllOrders = async () => {
     const orders = await Order.collection().fetch({
         require: false,
     })
-
     return orders;
 }
 

@@ -145,7 +145,7 @@ router.post("/:lure_id/update", async (req, res) => {
         "success": async (form) => {
             lure.set(form.data);
             lure.save();
-            req.flash("success_messages", `${lure.name} has been successfully updated`)
+            req.flash("success_messages", "Lure has been updated")
             res.redirect("/lures")
         },
         "error": async (form) => {
@@ -239,7 +239,7 @@ router.get("/:lure_id/variant/:variant_id/update", async (req, res) => {
     const allProperties = await lureDataLayer.getAllProperties();
 
     const variantForm = createVariantForm(allColours, allProperties, req.params.lure_id);
-    updateValues(variantForm.fields, variant, ["colour_id", "property_id", "stock", "cost", "image_url"])
+    updateValues(variantForm.fields, variant, ["colour_id", "property_id", "stock", "cost", "image_url", "thumbnail_url"])
 
 
     res.render("variants/update", {

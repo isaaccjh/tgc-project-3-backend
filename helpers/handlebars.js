@@ -5,4 +5,9 @@ Handlebars.registerHelper("getDisplayUsername", (user) => {
     return toDisplay
 });
 
+Handlebars.registerHelper("toDollars", (price) => {
+    const priceInDollars = price / 100;
+    return priceInDollars
+})
+
 module.exports = Handlebars.helpers;

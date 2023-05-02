@@ -10,7 +10,7 @@
     <div>
          <label class="d-block">Image URL</label>
         {{#if variant.image_url}}
-        <img src="{{variant.image_url}}" id="uploaded_image" class="mt-2" />
+        <img src="{{variant.thumbnail_url}}" id="uploaded_image" class="mt-2" />
         {{else}}
         <img src="" style="display:none" id="uploaded_image" />
         {{/if}}
@@ -57,8 +57,11 @@ var myWidget = cloudinary.createUploadWidget({
 
       // display the image
       document.querySelector('#id_image_url').value = result.info.url;
-      document.querySelector('#uploaded_image').src = result.info.url;
+      document.querySelector('#uploaded_image').src = result.info.thumbanil_url;
       document.querySelector('#uploaded_image').style.display = 'inline';
+
+      // insert thumbnail image
+      document.querySelector("#id_thumbnail_url").value = result.info.thumbnail_url
     }
   }
 )
