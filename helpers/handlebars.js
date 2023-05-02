@@ -6,7 +6,7 @@ Handlebars.registerHelper("getDisplayUsername", (user) => {
 });
 
 Handlebars.registerHelper("toDollars", (price) => {
-    const priceInDollars = price / 100;
+    const priceInDollars = (price / 100).toFixed(2);
     return priceInDollars;
 })
 

@@ -7,6 +7,8 @@ const checkIfAuthenticated = (req, res, next) => {
     }
 }
 
+
+
 module.exports = {
     checkIfAuthenticated
 }
