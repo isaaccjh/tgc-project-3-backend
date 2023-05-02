@@ -17,7 +17,8 @@ const getOrderData = (userId, stripeSession, paymentIntent) => {
         "billing_country": stripeSession.customer_details.address.country,
         // "billing_postal": stripeSession.customer_details.address.postal,
         "billing_address_line_1": stripeSession.customer_details.address.line1,
-        "billing_address_line_2": stripeSession.customer_details.address.line2
+        "billing_address_line_2": stripeSession.customer_details.address.line2,
+        "stripe_id": stripeSession.id
     }
     // console.log(paymentIntent);
     // console.log("User ID =>", req.session.user.id);

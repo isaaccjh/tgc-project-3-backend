@@ -109,7 +109,7 @@ exports.up = function (db) {
 };
 
 exports.down = function (db) {
-  return db.dropTabnle("orders");
+  return db.dropTable("orders");
 };
 
 exports._meta = {

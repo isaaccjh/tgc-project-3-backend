@@ -131,9 +131,15 @@ router.post("/process_payment", express.raw({ type: "application/json" }),
             const userId = (JSON.parse(stripeSession.metadata.orders))[0].user_id
             let orderData = getOrderData(userId, stripeSession, paymentIntent);
 
-            const orderInfo = JSON.parse(stripeSession.metadata.orders);
-                        
+            const orderItems = JSON.parse(stripeSession.metadata.orders);
+
             const newOrder = await orderDataLayer.addOrder(orderData);
+            const order = await orderDataLayer.findOrderIdByStripeId(stripeSession.id);
+
+            orderItems.forEach(item =>  {
+                console.log(item);
+                const newItem = orderDataLayer.addOrderItem(order.id, item.variant_id, item.quantity);
+            })
             // console.log(newOrder);
 
             

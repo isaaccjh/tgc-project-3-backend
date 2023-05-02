@@ -20,13 +20,23 @@ const addOrderItem = async (orderId, variantId, quantity) => {
         "variant_id": variantId,
         "order_id": orderId
     })
-
     await item.save();
     return item;
+}
+
+const findOrderIdByStripeId = async (stripeId) => {
+    const order = await Order.where({
+        "stripe_id": stripeId
+    }).fetch({
+        require: true
+    });
+
+    return order;
 }
 
 module.exports = {
     getAllOrders,
     addOrder,
-    addOrderItem
+    addOrderItem,
+    findOrderIdByStripeId
 }
