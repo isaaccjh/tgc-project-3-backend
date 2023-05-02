@@ -16,7 +16,7 @@
 
 <body style="font-family: Open Sans, sans-serif; margin:0px; padding: 0px;">
     <div class="container-fluid main m-0 px-0 d-flex">
-        <nav>
+        <nav class="position-fixed">
             <div class="d-flex flex-column flex-shrink-0 p-3 bg-light col-3" style="width: 280px; height: 100vh; ">
                 <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                     <svg class="bi me-2" width="40" height="32">
@@ -93,8 +93,7 @@
         </nav>
 
 
-        <div class="container-fluid">
-
+        <div class="container-fluid" style="margin-left: 280px">
             {{#if success_messages}}
                 {{#each success_messages}}
                      <div class="alert alert-success mt-2">
