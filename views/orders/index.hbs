@@ -25,16 +25,22 @@
             <td>{{id}}</td>
             <td>{{user.email}}</td>
             <td>
-                {{#if user.billing_address_line_2}}
-                    {{user.billing_address_line_1}}{{user.billing_address_line_2}}
+                {{#if billing_address_line_2}}
+                {{billing_address_line_1}}{{billing_address_line_2}}
                 {{else}}
-                    {{user.billing_address_line_1}}
+                {{billing_address_line_1}}
                 {{/if}}
             </td>
             <td>{{toDollars total_cost}}</td>
             <td>{{upperCaseFirst payment_type}}</td>
             <td>{{order_status.order_status}}</td>
             <td>{{order_date}}</td>
+            <td>
+                <div>
+                    <a class="btn btn-primary m-1">Update</a>
+                    <a class="btn btn-danger m-1">Delete</a>
+                </div>
+            </td>
         </tr>
         {{/each}}
     </tbody>

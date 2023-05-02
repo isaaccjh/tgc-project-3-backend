@@ -1,4 +1,4 @@
-const { Order, OrderStatus } = require("../models");
+const { Order, OrderItem } = require("../models");
 
 const getAllOrders = async () => {
     const orders = await Order.collection().fetch({
@@ -14,7 +14,19 @@ const addOrder = async (orderInfo) => {
     return order;
 }
 
+const addOrderItem = async (orderId, variantId, quantity) => {
+    const item =  new OrderItem({
+        "quantity": quantity,
+        "variant_id": variantId,
+        "order_id": orderId
+    })
+
+    await item.save();
+    return item;
+}
+
 module.exports = {
     getAllOrders,
-    addOrder
+    addOrder,
+    addOrderItem
 }

@@ -127,12 +127,15 @@ router.post("/process_payment", express.raw({ type: "application/json" }),
             let stripeSession = event.data.object;
             const paymentIntent = await Stripe.paymentIntents.retrieve(stripeSession.payment_intent);
             
-            console.log(JSON.parse(stripeSession.metadata.orders))
+            // console.log(JSON.parse(stripeSession.metadata.orders))
             const userId = (JSON.parse(stripeSession.metadata.orders))[0].user_id
             let orderData = getOrderData(userId, stripeSession, paymentIntent);
 
+            const orderInfo = JSON.parse(stripeSession.metadata.orders);
+                        
             const newOrder = await orderDataLayer.addOrder(orderData);
-            console.log(newOrder);
+            // console.log(newOrder);
+
             
         }
         res.send({ received: true });

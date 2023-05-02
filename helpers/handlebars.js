@@ -14,9 +14,9 @@ Handlebars.registerHelper("upperCaseFirst", (string) => {
     let stringArr = [...string];
     let upper = stringArr[0].toUpperCase();
     stringArr[0] = upper;
-    console.log(stringArr)
     const newString = stringArr.join("");
     return newString;
 })
+
 
 module.exports = Handlebars.helpers;

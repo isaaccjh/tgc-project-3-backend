@@ -8,7 +8,7 @@
     {{#each shoppingCart}}
     <li class="list-group-item my-3">
         <h4>{{this.variant.lure.name}}: Variant #{{this.variant.id}}</h4>
-        <h5>Cost: ${{this.variant.cost}}</h5>
+        <h5>Cost: ${{toDollars this.variant.cost}}</h5>
         <form action="/cart/variant/{{this.variant.id}}/quantity/update" method="post">
             <input type="hidden" value="{{../csrfToken}}" name="_csrf" />
             <h5 class="d-flex">
