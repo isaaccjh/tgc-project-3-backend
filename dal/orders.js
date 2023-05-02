@@ -15,7 +15,7 @@ const addOrder = async (orderInfo) => {
 }
 
 const addOrderItem = async (orderId, variantId, quantity) => {
-    const item =  new OrderItem({
+    const item = new OrderItem({
         "quantity": quantity,
         "variant_id": variantId,
         "order_id": orderId
@@ -24,7 +24,7 @@ const addOrderItem = async (orderId, variantId, quantity) => {
     return item;
 }
 
-const findOrderIdByStripeId = async (stripeId) => {
+const findOrderByStripeId = async (stripeId) => {
     const order = await Order.where({
         "stripe_id": stripeId
     }).fetch({
@@ -34,11 +34,22 @@ const findOrderIdByStripeId = async (stripeId) => {
     return order;
 }
 
+const getOrderItemsByOrderId = async (orderId) => {
+    const orderItems = await OrderItem.collection().where({
+        "order_id": orderId
+    }).fetch({
+        require: false,
+        withRelated: ["variant"]
+    })
+    return orderItems;
+}
+
 
 
 module.exports = {
     getAllOrders,
     addOrder,
     addOrderItem,
-    findOrderIdByStripeId
+    findOrderByStripeId,
+    getOrderItemsByOrderId
 }

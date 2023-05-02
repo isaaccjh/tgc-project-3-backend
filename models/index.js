@@ -93,7 +93,7 @@ const OrderItem = bookshelf.model("OrderItem", {
         return this.belongsTo("Order")
     },
     variant() {
-        return this.hasMany("Variant")
+        return this.belongsTo("Variant")
     }
 })
 

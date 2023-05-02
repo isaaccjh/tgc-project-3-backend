@@ -126,7 +126,7 @@ router.post("/process_payment", express.raw({ type: "application/json" }),
         if (event.type == "checkout.session.completed") {
             let stripeSession = event.data.object;
             const paymentIntent = await Stripe.paymentIntents.retrieve(stripeSession.payment_intent);
-            
+
             // console.log(JSON.parse(stripeSession.metadata.orders))
             const userId = (JSON.parse(stripeSession.metadata.orders))[0].user_id
             let orderData = getOrderData(userId, stripeSession, paymentIntent);
@@ -134,15 +134,12 @@ router.post("/process_payment", express.raw({ type: "application/json" }),
             const orderItems = JSON.parse(stripeSession.metadata.orders);
 
             const newOrder = await orderDataLayer.addOrder(orderData);
-            const order = await orderDataLayer.findOrderIdByStripeId(stripeSession.id);
+            const order = await orderDataLayer.findOrderByStripeId(stripeSession.id);
 
-            orderItems.forEach(item =>  {
+            orderItems.forEach(item => {
                 console.log(item);
                 const newItem = orderDataLayer.addOrderItem(order.id, item.variant_id, item.quantity);
             })
-            // console.log(newOrder);
-
-            
         }
         res.send({ received: true });
 
