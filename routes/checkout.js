@@ -42,7 +42,7 @@ router.get("/", async (req, res) => {
 
     let metaData = JSON.stringify(meta);
     const payment = {
-        payment_method_types: ["card", "paynow", "grabpay"],
+        payment_method_types: ["card", "grabpay"],
         mode: "payment",
         line_items: lineItems,
         success_url: process.env.STRIPE_SUCCESS_URL + '?sessionId={CHECKOUT_SESSION_ID}',

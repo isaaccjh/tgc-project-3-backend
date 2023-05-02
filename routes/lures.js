@@ -98,6 +98,7 @@ router.get("/create", checkIfAuthenticated, async (req, res) => {
 
 router.post("/create", checkIfAuthenticated, async (req, res) => {
     const allSeries = await lureDataLayer.getAllSeries()
+    
     const lureForm = createLureForm(allSeries);
 
     lureForm.handle(req, {
