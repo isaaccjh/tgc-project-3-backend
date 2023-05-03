@@ -1,4 +1,4 @@
-const { Lure, Serie, Variant, Colour, Property } = require("../models")
+const { Lure, Serie, Variant, Colour, Property } = require("../../models")
 
 const getAllLures = async () => {
     return await Lure.fetchAll();
