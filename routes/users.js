@@ -72,7 +72,8 @@ router.post("/login", async (req, res) => {
                     req.session.user = {
                         id: user.get("id"),
                         email: user.get("email"),
-                        username: user.get("username")
+                        username: user.get("username"),
+                        role: user.get("role_id")
                     }
                     req.flash("success_messages", `Welcome back, ${user.get("username") === "" ? "User" : user.get("username")}!`)
                     res.redirect("/users/profile");

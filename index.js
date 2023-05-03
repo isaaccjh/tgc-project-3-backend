@@ -72,6 +72,7 @@ app.use(function (err, req, res, next) {
 async function main () {
     app.use(function (req, res, next) {
         res.locals.user = req.session.user;
+        console.log(req.session.user);
         next();
     })
 
