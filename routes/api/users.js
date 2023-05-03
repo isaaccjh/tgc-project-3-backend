@@ -22,7 +22,10 @@ const getHashedPassword = (password) => {
     return hash;
 }
 
-router.get()
+router.get("/profile", checkIfAuthenticatedJWT, async (req, res) => {
+    const user = req.user;
+    res.send(user);
+})
 
 router.post("/login", async (req, res) => {
     const user = await User.where({
