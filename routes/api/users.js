@@ -17,10 +17,11 @@ const generateAccessToken = (user) => {
 }
 
 const getHashedPassword = (password) => {
-    const sha256 = crypto.createHash("256");
+    const sha256 = crypto.createHash("sha256");
     const hash = sha256.update(password).digest("base64");
     return hash;
 }
+
 
 router.get("/profile", checkIfAuthenticatedJWT, async (req, res) => {
     const user = req.user;

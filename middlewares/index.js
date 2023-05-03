@@ -7,6 +7,8 @@ const checkIfAuthenticated = (req, res, next) => {
     }
 }
 
+const jwt = require("jsonwebtoken")
+
 const checkIfAuthenticatedJWT = (req, res, next) => {
     const authHeader = req.headers.authorization;
 
@@ -40,5 +42,6 @@ const checkIfAdmin = (req, res, next) => {
 
 module.exports = {
     checkIfAuthenticated,
-    checkIfAdmin
+    checkIfAdmin,
+    checkIfAuthenticatedJWT
 }
