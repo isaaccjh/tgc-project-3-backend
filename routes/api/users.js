@@ -4,6 +4,7 @@ const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
 const { User } = require("../../models")
+const { checkIfAuthenticatedJWT } = require("../../middlewares")
 
 const generateAccessToken = (user) => {
     return jwt.sign({
@@ -20,6 +21,8 @@ const getHashedPassword = (password) => {
     const hash = sha256.update(password).digest("base64");
     return hash;
 }
+
+router.get()
 
 router.post("/login", async (req, res) => {
     const user = await User.where({
