@@ -6,6 +6,8 @@ const jwt = require("jsonwebtoken");
 const { User, BlacklistedToken } = require("../../models")
 const { checkIfAuthenticatedJWT } = require("../../middlewares")
 
+const tokenAccessLayer = require("../../dal/api/tokens");
+
     // const generateToken = (user) => {
     //     return jwt.sign({
     //         "username": user.get("username"),
@@ -61,6 +63,12 @@ router.post("/refresh", async (req, res) => {
     let refreshToken = req.body.refreshToken;
     if (!refreshToken) {
         res.sendStatus(401)
+    }
+
+    let blacklistedToken = await tokenAccessLayer.getBlacklistenToken(refreshToken);
+    if (blacklistedToken) {
+        res.status(401);
+        return res.send("The refresh token has already expired")
     }
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
         if (err) {
