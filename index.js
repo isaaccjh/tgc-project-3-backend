@@ -48,11 +48,15 @@ const routes = {
     orders: require("./routes/orders")
 }
 
+const api = {
+    lures: require("./routes/api/lures")
+}
+
 // app.use(csrf());
 const csurfInstance = csrf();
 app.use(function (req, res, next) {
     console.log("checking for csrf exclusion")
-    if (req.url === "/checkout/process_payment") {
+    if (req.url === "/checkout/process_payment" || req.url.slice(0, 5) === "/api/") {
         return next()
     }
     csurfInstance(req, res, next);
@@ -86,7 +90,8 @@ async function main() {
     app.use("/cloudinary", routes.cloudinary);
     app.use("/cart", routes.shoppingCart);
     app.use("/checkout", routes.checkout);
-    app.use("/orders", routes.orders)
+    app.use("/orders", routes.orders);
+    app.use("/api/lures", express.json(), api.lures)
 }
 
 main();

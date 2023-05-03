@@ -5,6 +5,12 @@ const getAllSeries = async () => {
     return series;
 }
 
+
+const getAllLures = async () => {
+    const lures = await Lure.fetchAll();
+    return lures;
+}
+
 const getLureById = async (lureId) => {
     const lure = await Lure.where({
         "id": parseInt(lureId)
@@ -53,5 +59,6 @@ module.exports = {
     getAllVariantsByLureId,
     getAllColours,
     getAllProperties,
-    getVariantById
+    getVariantById,
+    getAllLures
 }
