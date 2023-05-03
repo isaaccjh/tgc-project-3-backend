@@ -39,8 +39,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-
-
 const routes = {
     lures: require("./routes/lures"),
     users: require("./routes/users"),
@@ -69,7 +67,7 @@ app.use(function (err, req, res, next) {
     }
 })
 
-async function main () {
+async function main() {
     app.use(function (req, res, next) {
         res.locals.user = req.session.user;
         console.log(req.session.user);
