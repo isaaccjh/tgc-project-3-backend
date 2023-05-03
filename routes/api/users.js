@@ -3,7 +3,7 @@ const router = express.Router();
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
-const { User } = require("../../models")
+const { User, BlacklistedToken } = require("../../models")
 const { checkIfAuthenticatedJWT } = require("../../middlewares")
 
     // const generateToken = (user) => {
@@ -72,6 +72,26 @@ router.post("/refresh", async (req, res) => {
             accessToken
         })
     })
+})
+
+router.post("/logout", async (req, res) => {
+    let refreshToken = req.body.refreshToken;
+    if (!refreshToken) {
+        res.sendStatus(401);
+    } else {
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err, user) => {
+            if (err) {
+                return res.sendStatus(403);
+            }
+            const token = new BlacklistedToken();
+            token.set("token", refreshToken);
+            token.set("date_created", new Date());
+            await token.save();
+            res.send({
+                message: "Logged out    "
+            })
+        })
+    }
 })
 
 module.exports = router;
