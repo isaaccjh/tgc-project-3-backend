@@ -2,6 +2,7 @@ const express = require("express");
 const hbs = require("hbs");
 const wax = require("wax-on");
 const csrf = require("csurf")
+const cors = require("cors")
 require("dotenv").config();
 
 const session = require("express-session");
@@ -12,6 +13,7 @@ let app = express();
 
 app.set("view engine", "hbs");
 app.use(express.static("public"));
+app.use(cors());
 
 wax.on(hbs.handlebars);
 wax.setLayoutPath("./views/layouts");

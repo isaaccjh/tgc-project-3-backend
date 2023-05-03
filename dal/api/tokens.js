@@ -13,6 +13,6 @@ const getBlacklistedToken = async (refreshToken) => {
     }
 }
 
-moduele.exports = {
+module.exports = {
     getBlacklistedToken
 }
