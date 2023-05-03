@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const { User, BlacklistedToken } = require("../../models")
 const { checkIfAuthenticatedJWT } = require("../../middlewares")
 
-const tokenAccessLayer = require("../../dal/api/tokens");
+const tokenAccessLayer = require("../../dal/tokens");
 
     // const generateToken = (user) => {
     //     return jwt.sign({

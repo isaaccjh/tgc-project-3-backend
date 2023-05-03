@@ -1,4 +1,4 @@
-const { BlacklistedToken } = require("../../models");
+const { BlacklistedToken } = require("../models");
 
 const getBlacklistedToken = async (refreshToken) => {
     const blacklistedToken = await BlacklistedToken.where({

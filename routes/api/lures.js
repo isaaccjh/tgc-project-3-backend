@@ -4,7 +4,7 @@ const router = express.Router();
 const { Lure } = require("../../models");
 const { createLureForm } = require("../../forms")
 
-const lureDataLayer = require("../../dal/api/lures")
+const lureDataLayer = require("../../dal/lures")
 
 router.get("/", async (req, res) => {
     res.send(await lureDataLayer.getAllLures());
