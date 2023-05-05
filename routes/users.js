@@ -54,7 +54,7 @@ router.get("/login", (req, res) => {
 
 })
 
-router.post("/login", checkIfAuthenticated,  async (req, res) => {
+router.post("/login",  async (req, res) => {
     const loginForm = createLoginForm();
     loginForm.handle(req, {
         "success": async (form) => {
@@ -99,7 +99,7 @@ router.post("/login", checkIfAuthenticated,  async (req, res) => {
     })
 });
 
-router.get("/profile", checkIfAuthenticatedJWT, (req, res) => {
+router.get("/profile", [checkIfAuthenticated], (req, res) => {
     const user = req.session.user;
     if (!user) {
         req.flash("error_messages", "Please login first!")
