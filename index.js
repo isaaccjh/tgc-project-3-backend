@@ -88,6 +88,14 @@ async function main() {
         next();
     })
 
+    app.get("/", (req, res) => {
+        if (req.session.user) {
+            res.redirect("/lures")
+        } else {
+            res.redirect("/users/login")
+        }
+    })
+
     app.use("/lures", routes.lures);
     app.use("/users", routes.users);
     app.use("/cloudinary", routes.cloudinary);
