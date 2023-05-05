@@ -7,7 +7,7 @@ const { updateValues } = require("../helpers/updateForm");
 const { checkIfAuthenticated } = require("../middlewares");
 const lureDataLayer = require("../dal/lures");
 
-router.get("/", async (req, res) => {
+router.get("/", checkIfAuthenticated, async (req, res) => {
     const allSeries = await lureDataLayer.getAllSeries();
     allSeries.unshift([0, "----"]);
 
@@ -121,7 +121,7 @@ router.post("/create", checkIfAuthenticated, async (req, res) => {
     })
 })
 
-router.get("/:lure_id/update", async (req, res) => {
+router.get("/:lure_id/update", checkIfAuthenticated, async (req, res) => {
     const lure = await lureDataLayer.getLureById(req.params.lure_id);
 
     const allSeries = await lureDataLayer.getAllSeries();
@@ -136,7 +136,7 @@ router.get("/:lure_id/update", async (req, res) => {
     })
 });
 
-router.post("/:lure_id/update", async (req, res) => {
+router.post("/:lure_id/update", checkIfAuthenticated, async (req, res) => {
     const lure = await lureDataLayer.getLureById(req.params.lure_id);
     const allSeries = await lureDataLayer.getAllSeries();
 
@@ -163,7 +163,7 @@ router.post("/:lure_id/update", async (req, res) => {
     })
 })
 
-router.get("/:lure_id/delete", async (req, res) => {
+router.get("/:lure_id/delete", checkIfAuthenticated, async (req, res) => {
     const lure = await lureDataLayer.getLureById(req.params.lure_id);
 
     res.render("lures/delete", {
@@ -171,14 +171,14 @@ router.get("/:lure_id/delete", async (req, res) => {
     })
 })
 
-router.post("/:lure_id/delete", async (req, res) => {
+router.post("/:lure_id/delete", checkIfAuthenticated, async (req, res) => {
     const lure = await lureDataLayer.getLureById(req.params.lure_id)
     await lure.destroy();
 
     res.redirect("/lures")
 })
 
-router.get("/:lure_id/variant", async (req, res) => {
+router.get("/:lure_id/variant", checkIfAuthenticated, async (req, res) => {
     const variants = await lureDataLayer.getAllVariantsByLureId(req.params.lure_id);
 
     const lure = await lureDataLayer.getLureById(req.params.lure_id)
@@ -189,7 +189,7 @@ router.get("/:lure_id/variant", async (req, res) => {
     })
 })
 
-router.get("/:lure_id/variant/create", async (req, res) => {
+router.get("/:lure_id/variant/create", checkIfAuthenticated, async (req, res) => {
 
     const allColours = await lureDataLayer.getAllColours();
     const allProperties = await lureDataLayer.getAllProperties();
@@ -203,7 +203,7 @@ router.get("/:lure_id/variant/create", async (req, res) => {
     })
 })
 
-router.post("/:lure_id/variant/create", async (req, res) => {
+router.post("/:lure_id/variant/create", checkIfAuthenticated, async (req, res) => {
 
     const allColours = await lureDataLayer.getAllColours();
     const allProperties = await lureDataLayer.getAllProperties();
@@ -232,7 +232,7 @@ router.post("/:lure_id/variant/create", async (req, res) => {
 
 })
 
-router.get("/:lure_id/variant/:variant_id/update", async (req, res) => {
+router.get("/:lure_id/variant/:variant_id/update", checkIfAuthenticated, async (req, res) => {
     const variant = await lureDataLayer.getVariantById(req.params.variant_id);
 
     const allColours = await lureDataLayer.getAllColours();
@@ -251,7 +251,7 @@ router.get("/:lure_id/variant/:variant_id/update", async (req, res) => {
     })
 })
 
-router.post("/:lure_id/variant/:variant_id/update", async (req, res) => {
+router.post("/:lure_id/variant/:variant_id/update", checkIfAuthenticated,  async (req, res) => {
     const variant = await lureDataLayer.getVariantById(req.params.variant_id)
     const allColours = await lureDataLayer.getAllColours();
     const allProperties = await lureDataLayer.getAllProperties();
@@ -282,14 +282,14 @@ router.post("/:lure_id/variant/:variant_id/update", async (req, res) => {
     })
 })
 
-router.get("/:lure_id/variant/:variant_id/delete", async (req, res) => {
+router.get("/:lure_id/variant/:variant_id/delete", checkIfAuthenticated, async (req, res) => {
     const variant = await lureDataLayer.getVariantById(req.params.variant_id)
     res.render("variants/delete", {
         variant: variant.toJSON()
     })
 })
 
-router.post("/:lure_id/variant/:variant_id/delete", async (req, res) => {
+router.post("/:lure_id/variant/:variant_id/delete", checkIfAuthenticated, async (req, res) => {
     const variant = await lureDataLayer.getVariantById(req.params.variant_id);
     await variant.destroy();
     req.flash("error_messages", `Variant has successfully been deleted`);

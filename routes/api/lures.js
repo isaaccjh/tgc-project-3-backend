@@ -4,13 +4,14 @@ const router = express.Router();
 const { Lure } = require("../../models");
 const { createLureForm } = require("../../forms")
 
-const lureDataLayer = require("../../dal/lures")
+const lureDataLayer = require("../../dal/lures");
+const { checkIfAuthenticated } = require("../../middlewares");
 
-router.get("/", async (req, res) => {
+router.get("/", checkIfAuthenticated, async (req, res) => {
     res.send(await lureDataLayer.getAllLures());
 });
 
-router.post("/", async (req, res) => {
+router.post("/", checkIfAuthenticated,  async (req, res) => {
     const allSeries = await lureDataLayer.getAllSeries()
     const lureForm = createLureForm(allSeries);
 

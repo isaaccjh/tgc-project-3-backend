@@ -96,7 +96,7 @@ router.post("/logout", async (req, res) => {
             token.set("date_created", new Date());
             await token.save();
             res.send({
-                message: "Logged out    "
+                message: "Logged out"
             })
         })
     }

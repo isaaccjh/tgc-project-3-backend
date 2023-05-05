@@ -3,7 +3,7 @@ const router = express.Router();
 const crypto = require("crypto");
 
 const { User } = require("../models")
-
+const { checkIfAuthenticated, checkIfAuthenticatedJWT } = require("../middlewares") 
 const { createRegistrationForm, createLoginForm, bootstrapField } = require("../forms");
 
 const getHashedPassword = (password) => {
@@ -54,7 +54,7 @@ router.get("/login", (req, res) => {
 
 })
 
-router.post("/login", async (req, res) => {
+router.post("/login", checkIfAuthenticated,  async (req, res) => {
     const loginForm = createLoginForm();
     loginForm.handle(req, {
         "success": async (form) => {
@@ -99,7 +99,7 @@ router.post("/login", async (req, res) => {
     })
 });
 
-router.get("/profile", (req, res) => {
+router.get("/profile", checkIfAuthenticatedJWT, (req, res) => {
     const user = req.session.user;
     if (!user) {
         req.flash("error_messages", "Please login first!")
