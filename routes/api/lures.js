@@ -7,8 +7,9 @@ const { createLureForm } = require("../../forms")
 const lureDataLayer = require("../../dal/lures");
 const { checkIfAuthenticated } = require("../../middlewares");
 
-router.get("/", checkIfAuthenticated, async (req, res) => {
+router.get("/", async (req, res) => {
     res.send(await lureDataLayer.getAllLures());
+    
 });
 
 router.post("/", checkIfAuthenticated,  async (req, res) => {
