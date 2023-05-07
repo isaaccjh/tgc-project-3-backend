@@ -8,7 +8,7 @@ const getAllSeries = async () => {
 
 const getAllLures = async () => {
     const lures = await Lure.fetchAll({
-        withRelated:["colour", "property", "variant"]
+        
     });
     return lures;
 }
