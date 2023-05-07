@@ -259,21 +259,18 @@ router.post("/:lure_id/variant/:variant_id/update", checkIfAuthenticated,  async
 
     variantForm.handle(req, {
         "success": async (form) => {
-            console.log(form.data)
             variant.set(form.data);
             await variant.save();
             req.flash("success_messages", `Variant #${variant.toJSON().id} has been successfully updated!`)
             res.redirect(`/lures/${req.params.lure_id}/variant`)
         },
         "error": (form) => {
-            console.log("error", form.data)
             res.render("variants/create", {
                 "form": variantForm.toHTML(bootstrapField),
                 "variant": variant.toJSON()
             })
         },
         "empty": (form) => {
-            console.log("empty", form.data)
             res.render("variants/create", {
                 "form": variantForm.toHTML(bootstrapField),
                 "variant": variant.toJSON()

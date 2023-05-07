@@ -137,7 +137,6 @@ router.post("/process_payment", express.raw({ type: "application/json" }),
             const order = await orderDataLayer.findOrderByStripeId(stripeSession.id);
 
             orderItems.forEach(item => {
-                console.log(item);
                 const newItem = orderDataLayer.addOrderItem(order.id, item.variant_id, item.quantity);
             })
         }

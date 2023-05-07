@@ -77,7 +77,6 @@ router.post("/login",  async (req, res) => {
                     }
                     req.flash("success_messages", `Welcome back, ${user.get("username") === "" ? "User" : user.get("username")}!`)
                     res.redirect("/users/profile");
-                    console.log(req.session.user);
                 } else {
                     req.flash("error_messages", "Incorrect password")
                     res.redirect("/users/login")
@@ -116,6 +115,5 @@ router.get("/logout", (req, res) => {
     req.session.user = null;
     req.flash("success_messages", "Logged out successfully.");
     res.redirect("/users/login");
-    console.log(req.session.user)
 })
 module.exports = router;
