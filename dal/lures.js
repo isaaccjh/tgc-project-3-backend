@@ -7,9 +7,7 @@ const getAllSeries = async () => {
 
 
 const getAllLures = async () => {
-    const lures = await Lure.fetchAll({
-        
-    });
+    const lures = await Lure.fetchAll({});
     return lures;
 }
 
@@ -22,6 +20,7 @@ const getLureById = async (lureId) => {
     });
     return lure; 
 }
+
 
 const getAllVariantsByLureId = async (lureId) => {
     const variants = await Variant.collection().where({

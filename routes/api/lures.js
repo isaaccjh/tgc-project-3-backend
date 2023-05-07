@@ -9,8 +9,12 @@ const { checkIfAuthenticated } = require("../../middlewares");
 
 router.get("/", async (req, res) => {
     res.send(await lureDataLayer.getAllLures());
-    
 });
+
+router.get("/:lure_id", async (req, res) => {
+    const lures = await lureDataLayer.getAllVariantsByLureId(req.params.lure_id);
+    res.send(lures)
+})
 
 router.post("/", checkIfAuthenticated,  async (req, res) => {
     const allSeries = await lureDataLayer.getAllSeries()
