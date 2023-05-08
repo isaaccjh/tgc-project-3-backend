@@ -16,6 +16,7 @@ router.get("/:lure_id", async (req, res) => {
     res.send(lures)
 })
 
+
 router.post("/", checkIfAuthenticated,  async (req, res) => {
     const allSeries = await lureDataLayer.getAllSeries()
     const lureForm = createLureForm(allSeries);

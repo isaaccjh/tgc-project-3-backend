@@ -33,6 +33,11 @@ const getAllVariantsByLureId = async (lureId) => {
     return variants;
 }
 
+const getAllVariants = async () => {
+    const variants = await Variant.fetchAll({withRelated: ["colour", "property", "lure"]});
+    return variants;
+}
+
 const getAllColours = async () => {
     const colours = await Colour.fetchAll().map(c => [c.get("id"), c.get("name")]);
     return colours;
@@ -61,5 +66,6 @@ module.exports = {
     getAllColours,
     getAllProperties,
     getVariantById,
-    getAllLures
+    getAllLures,
+    getAllVariants
 }
