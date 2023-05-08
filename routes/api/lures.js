@@ -11,6 +11,10 @@ router.get("/", async (req, res) => {
     res.send(await lureDataLayer.getAllLures());
 });
 
+router.get("/variants", async (req, res) => {
+    res.send(await lureDataLayer.getAllVariants());
+})
+
 router.get("/:lure_id", async (req, res) => {
     const lures = await lureDataLayer.getAllVariantsByLureId(req.params.lure_id);
     res.send(lures);
