@@ -18,5 +18,13 @@ Handlebars.registerHelper("upperCaseFirst", (string) => {
     return newString;
 })
 
+Handlebars.registerHelper("checkDepth", (num) => {
+    if (num !== 0) {
+        return num
+    } else {
+        return "ALL"
+    }
+})
+
 
 module.exports = Handlebars.helpers;

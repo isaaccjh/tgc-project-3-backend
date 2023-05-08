@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:lure_id", async (req, res) => {
     const lures = await lureDataLayer.getAllVariantsByLureId(req.params.lure_id);
-    res.send(lures)
+    res.send(lures);
 })
 
 router.post("/", checkIfAuthenticated,  async (req, res) => {
