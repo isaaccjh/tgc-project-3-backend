@@ -46,7 +46,7 @@ router.get("/", async (req, res) => {
         mode: "payment",
         line_items: lineItems,
         success_url: process.env.STRIPE_SUCCESS_URL + '?sessionId={CHECKOUT_SESSION_ID}',
-        cancel_url: process.env.STRIPE_SUCCESS_URL,
+        cancel_url: process.env.STRIPE_ERROR_URL,
         metadata: {
             "orders": metaData
         },
