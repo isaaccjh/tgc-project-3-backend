@@ -33,6 +33,16 @@ const getHashedPassword = (password) => {
     return hash;
 }
 
+router.post("/register", async (req, res) => {
+    let { password, ...userData } = req.body;
+    const user = new User({
+        ...userData,
+        "password": getHashedPassword(password)
+    })
+
+    await user.save();
+    return user;
+})
 
 router.get("/profile", checkIfAuthenticatedJWT, async (req, res) => {
     const user = req.user;
