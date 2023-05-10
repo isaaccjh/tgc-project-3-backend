@@ -37,7 +37,7 @@ const getHashedPassword = (password) => {
 router.get("/profile", checkIfAuthenticatedJWT, async (req, res) => {
     const user = req.user;
     res.send(user);
-})
+});
 
 router.post("/register", async (req, res) => {
     let { password, ...userData } = req.body;
@@ -48,8 +48,7 @@ router.post("/register", async (req, res) => {
 
     await user.save();
     return user;
-})
-
+});
 
 router.post("/login", async (req, res) => {
     const user = await User.where({
@@ -69,7 +68,7 @@ router.post("/login", async (req, res) => {
             "error": "Invalid login."
         })
     }
-})
+});
 
 router.post("/refresh", async (req, res) => {
     let refreshToken = req.body.refreshToken;
@@ -77,7 +76,7 @@ router.post("/refresh", async (req, res) => {
         res.sendStatus(401)
     }
 
-    let blacklistedToken = await tokenAccessLayer.getBlacklistenToken(refreshToken);
+    let blacklistedToken = await tokenAccessLayer.getBlacklistedToken(refreshToken);
     if (blacklistedToken) {
         res.status(401);
         return res.send("The refresh token has already expired")
@@ -92,7 +91,7 @@ router.post("/refresh", async (req, res) => {
             accessToken
         })
     })
-})
+});
 
 router.post("/logout", async (req, res) => {
     let refreshToken = req.body.refreshToken;
@@ -112,6 +111,8 @@ router.post("/logout", async (req, res) => {
             })
         })
     }
-})
+});
+
+
 
 module.exports = router;
