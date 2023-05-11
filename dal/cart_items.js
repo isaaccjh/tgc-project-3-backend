@@ -5,7 +5,7 @@ const getCart = async (userId) => {
         "user_id": userId
     }).fetch({
         require: false,
-        withRelated: ["variant", "variant.lure", "variant.colour", "variant.serie", "variant.property"]
+        withRelated: ["variant", "variant.lure", "variant.colour", "variant.property", "lure", "lure.serie"]
     });
     return cart;
 }
