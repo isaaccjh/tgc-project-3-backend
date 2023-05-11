@@ -13,12 +13,12 @@ router.get("/:user_id", checkIfAuthenticatedJWT, async (req, res) => {
     }
 })
 
-router.post("/update",  async (req, res) => {
+router.post("/update", async (req, res) => {
     try {
         const cart = await cartDataLayer.updateQuantity(req.body.userId, req.body.variantId, req.body.quantity);
-        res.status(200).send("Updated", cart)
+        res.status(200).send(cart)
     } catch (e) {
-        res.sendStatus(404);
+        res.status(404).send("Failed");
     }
     
 })
