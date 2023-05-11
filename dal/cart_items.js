@@ -49,6 +49,7 @@ const updateQuantity = async (userId, variantId, newQuantity) => {
     return false;
 }
 
+
 module.exports = {
     getCart,
     getCartItemByUserAndVariant,
