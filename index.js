@@ -52,7 +52,8 @@ const routes = {
 
 const api = {
     lures: require("./routes/api/lures"),
-    users: require("./routes/api/users")
+    users: require("./routes/api/users"),
+    carts: require("./routes/api/carts")
 }
 
 // app.use(csrf());
@@ -103,7 +104,8 @@ async function main() {
     app.use("/checkout", routes.checkout);
     app.use("/orders", routes.orders);
     app.use("/api/lures", express.json(), api.lures);
-    app.use("/api/users", express.json(), api.users)
+    app.use("/api/users", express.json(), api.users);
+    app.use("/api/carts", express.json(), api.carts)
 }
 
 main();
