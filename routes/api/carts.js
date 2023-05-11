@@ -13,6 +13,15 @@ router.get("/:user_id", checkIfAuthenticatedJWT, async (req, res) => {
     }
 })
 
+router.post("/add", async (req, res) => {
+    try {
+        const cart = await cartDataLayer.createCartItem(req.body.userId, req.body.variantId, req.body.quantity);
+        res.status(200).send(cart);
+    } catch (e) {
+        res.sendStatus(404);
+    }
+})
+
 router.post("/update", async (req, res) => {
     try {
         const cart = await cartDataLayer.updateQuantity(req.body.userId, req.body.variantId, req.body.quantity);
@@ -21,6 +30,7 @@ router.post("/update", async (req, res) => {
         res.status(404).send("Failed to update, please try again later.");
     }  
 })
+
 
 router.post("/delete", async (req, res) => {
     try {
