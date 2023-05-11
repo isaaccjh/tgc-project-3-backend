@@ -105,7 +105,7 @@ async function main() {
     app.use("/orders", routes.orders);
     app.use("/api/lures", express.json(), api.lures);
     app.use("/api/users", express.json(), api.users);
-    app.use("/api/carts", express.json(), api.carts)
+    app.use("/api/carts", express.json(), api.carts);
 }
 
 main();
