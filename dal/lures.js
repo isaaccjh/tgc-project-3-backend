@@ -8,7 +8,7 @@ const getAllSeries = async () => {
 const searchLures = async (query) => {
     const search = Lure.collection();
     if (query.name) {
-        search.where("name", "like", `%${query.name}%`);
+        search.where("lures.name", "like", `%${query.name}%`);
     };
     if (query.hook) {
         search.where("hook", "like", `%${query.hook}`);
@@ -36,9 +36,9 @@ const searchLures = async (query) => {
         search.where("depth", "<=", query.max_depth);
     };
 
-    if (query.series) {
-        search.query("join", "series", "series.id", "=", "lures.serie_id");
-    }
+    // if (query.series) {
+    //     search.query("join", "series", "series.id", "=", "lures.serie_id");
+    // }
 
     // if (query.colour) {
     //     search.query("join", "variants", "lures.id", "lure_id")
