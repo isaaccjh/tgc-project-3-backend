@@ -8,7 +8,7 @@ const getAllSeries = async () => {
 const searchLures = async (query) => {
     const search = Lure.collection();
     if (query.name) {
-        search.where("lures.name", "like", `%${query.name}%`);
+        search.where("name", "like", `%${query.name}%`);
     };
     if (query.hook) {
         search.where("hook", "like", `%${query.hook}`);
