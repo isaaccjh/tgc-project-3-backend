@@ -43,7 +43,7 @@ const searchLures = async (query) => {
 
     let result = await search.orderBy('id').fetch({
         withRelated: [
-            Variant
+            "variant", "variant.colour", "variant.property"
         ]
     });
     return result;
