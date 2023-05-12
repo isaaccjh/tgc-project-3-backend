@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const cartDataLayer = require("../../dal/cart_items");
-const { checkIfAuthenticatedJWT } = require("../../middlewares")
+const { checkIfAuthenticatedJWT } = require("../../middlewares");
 
 router.get("/:user_id", checkIfAuthenticatedJWT, async (req, res) => {
     try {
@@ -12,6 +12,7 @@ router.get("/:user_id", checkIfAuthenticatedJWT, async (req, res) => {
         res.sendStatus(404);
     }
 })
+
 
 router.post("/add", async (req, res) => {
     try {

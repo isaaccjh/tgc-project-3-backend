@@ -15,49 +15,7 @@ router.get("/", checkIfAuthenticated, async (req, res) => {
     const q = Lure.collection();
     searchForm.handle(req, {
         "success": async (form) => {
-            if (form.data.name) {
-                q.where("name", "like", `%${form.data.name}%`)
-            }
-
-            // if (form.data.series) {
-            //     q.query("join", "series", "lures.serie_id", "series.id")
-            //         .where("lures.name", "like", form.data.series)
-            // }
-
-            if (form.data.hook) {
-                q.where("hook", "like", `%${form.data.hook}%`)
-            }
-
-            if (form.data.type) {
-                q.where("type", "like", `%${form.data.type}%`)
-            }
-
-            if (form.data.min_size) {
-                q.where('size', '>=', form.data.min_size)
-            }
-
-            if (form.data.max_size) {
-                q = q.where('size', '<=', form.data.max_size);
-            }
-
-            if (form.data.min_weight) {
-                q.where('weight', '>=', form.data.min_weight)
-            }
-
-            if (form.data.max_weight) {
-                q = q.where('weight', '<=', form.data.max_weight);
-            }
-            if (form.data.min_depth) {
-                q.where('depth', '>=', form.data.min_depth)
-            }
-
-            if (form.data.max_depth) {
-                q = q.where('depth', '<=', form.data.max_depth);
-            }
-
-            let lures = await q.fetch({
-                withRelated: ["serie"]
-            })
+            let lures = await lureDataLayer.searchLures(form.data);
 
             res.render("lures/index", {
                 "lure": lures.toJSON(),

@@ -5,6 +5,50 @@ const getAllSeries = async () => {
     return series;
 }
 
+const searchLures = async (query) => {
+    const search = Lure.collection();
+    if (query.name) {
+        search.where("name", "like", `%${query.name}%`);
+    };
+    if (query.hook) {
+        search.where("hook", "like", `%${query.hook}`);
+    };
+    if (query.type) {
+        search.where("type", "like", `%${query.type}`);
+    };
+
+    if (query.min_size) {
+        search.where("size", ">=", query.min_size);
+    };
+    if (query.max_size) {
+        search.where("size", "<=", query.max_size)
+    };
+    if (query.min_weight) {
+        search.where("weight", ">=", query.min_weight);
+    };
+    if (query.max_weight) {
+        search.where("weight", "<=", query.max_weight)
+    };
+    if (query.min_depth) {
+        search.where("depth", ">=", query.min_depth);
+    };
+    if (query.max_depth) {
+        search.where("depth", "<=", query.max_depth);
+    };
+
+    if (query.colour) {
+        search.query("join", "variants", "lures.id", "lure_id")
+                .where("colour_id", "in", query.colour);
+    };
+
+    let result = await search.orderBy('id').fetch({
+        withRelated: [
+            Variant
+        ]
+    });
+    return result;
+}
+
 
 const getAllLures = async () => {
     const lures = await Lure.fetchAll({});
@@ -67,5 +111,6 @@ module.exports = {
     getAllProperties,
     getVariantById,
     getAllLures,
-    getAllVariants
+    getAllVariants,
+    searchLures
 }
