@@ -36,14 +36,18 @@ const searchLures = async (query) => {
         search.where("depth", "<=", query.max_depth);
     };
 
-    if (query.colour) {
-        search.query("join", "variants", "lures.id", "lure_id")
-                .where("colour_id", "in", query.colour);
-    };
+    if (query.series) {
+        search.query("join", "series", "series.id", "=", "lures.serie_id");
+    }
+
+    // if (query.colour) {
+    //     search.query("join", "variants", "lures.id", "lure_id")
+    //             .where("colour_id", "in", query.colour);
+    // };
 
     let result = await search.orderBy('id').fetch({
         withRelated: [
-            "variant", "variant.colour", "variant.property"
+            "variant", "variant.colour", "variant.property", "serie"
         ]
     });
     return result;
