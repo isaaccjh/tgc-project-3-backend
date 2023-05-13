@@ -32,7 +32,7 @@ router.get("/:user_id", express.json(),  async (req, res) => {
         }
         lineItems.push(lineItem);
         meta.push({
-            "user_id": req.session.user.id,
+            "user_id": req.params.user_id,
             "variant_id": i.get("variant_id"),
             "quantity": i.get("quantity")
         })
