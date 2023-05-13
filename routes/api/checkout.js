@@ -9,8 +9,8 @@ const Stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const { getOrderData } = require("../../helpers/getOrderData");
 const orderDataLayer = require("../../dal/orders");
 
-router.get("/", express.json(),  async (req, res) => {
-    const cart = new CartServices(req.body.userId);
+router.get("/:user_id", express.json(),  async (req, res) => {
+    const cart = new CartServices(req.params.user_id);
     let items = await cart.getCart();
 
     let lineItems = [];
