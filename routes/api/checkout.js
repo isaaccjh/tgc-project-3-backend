@@ -4,8 +4,6 @@ const router = express.Router();
 const CartServices = require("../../services/cart_services");
 const Stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-
-
 const { getOrderData } = require("../../helpers/getOrderData");
 const orderDataLayer = require("../../dal/orders");
 
@@ -125,6 +123,7 @@ router.post("/process_payment", express.raw({ type: "application/json" }),
             console.log(e.message)
         }
         if (event.type == "checkout.session.completed") {
+            console.log(stripeSession);
             let stripeSession = event.data.object;
             const paymentIntent = await Stripe.paymentIntents.retrieve(stripeSession.payment_intent);
 
