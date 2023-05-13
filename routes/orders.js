@@ -13,12 +13,6 @@ router.get("/", async (req, res) => {
 router.get("/:order_id", async (req, res) => {
     const orders = await orderDataLayer.getOrderItemsByOrderId(req.params.order_id);
 
-    orders.toJSON().forEach(orderItem => {
-        console.log("colour:", orderItem.colour);
-        console.log("lure:", orderItem.lure);
-        console.log("property:", orderItem.property);
-    })
-
     res.render("orders/details", {
         orders: orders.toJSON()
     })
