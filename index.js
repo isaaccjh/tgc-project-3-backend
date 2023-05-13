@@ -46,14 +46,15 @@ const routes = {
     users: require("./routes/users"),
     cloudinary: require("./routes/cloudinary"),
     shoppingCart: require("./routes/shoppingCart"),
-    checkout: require("./routes/checkout"),
+    checkout: require("./routes/api/checkout"),
     orders: require("./routes/orders")
 }
 
 const api = {
     lures: require("./routes/api/lures"),
     users: require("./routes/api/users"),
-    carts: require("./routes/api/carts")
+    carts: require("./routes/api/carts"),
+    checkout: require("./routes/api/checkout")
 }
 
 // app.use(csrf());
@@ -101,11 +102,11 @@ async function main() {
     app.use("/users", routes.users);
     app.use("/cloudinary", routes.cloudinary);
     app.use("/cart", routes.shoppingCart);
-    app.use("/checkout", express.json(), routes.checkout);
     app.use("/orders", routes.orders);
     app.use("/api/lures", express.json(), api.lures);
     app.use("/api/users", express.json(), api.users);
     app.use("/api/carts", express.json(), api.carts);
+    app.use("api/checkout", api.checkout);
 }
 
 main();
