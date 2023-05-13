@@ -123,8 +123,8 @@ router.post("/process_payment", express.raw({ type: "application/json" }),
             console.log(e.message)
         }
         if (event.type == "checkout.session.completed") {
-            console.log(stripeSession);
             let stripeSession = event.data.object;
+            console.log(stripeSession);
             const paymentIntent = await Stripe.paymentIntents.retrieve(stripeSession.payment_intent);
 
             // console.log(JSON.parse(stripeSession.metadata.orders))
