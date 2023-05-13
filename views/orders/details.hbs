@@ -14,8 +14,8 @@
 <table class="table">
     <thead>
         <tr>
-            <th></th>
             <th>Lure</th>
+            <th></th>
             <th>Colour</th>
             <th>Property</th>
             <th>Cost</th>
@@ -24,14 +24,14 @@
     </thead>
     <tbody>
         {{#each orders}}
-            <tr>
-                <td><img src="{{variant.thumbnail_url}}"></td>
-                <td>{{variant.lure.name}}</td>
-                <td>{{variant.colour.name}}</td>
-                <td>{{variant.property.name}}</td>
-                <td>${{toDollars variant.cost}}</td>
-                <td>{{this.quantity}}</td>
-            </tr>
+        <tr>
+            <td>{{variant.lure.name}}</td>
+            <td><img src="{{variant.thumbnail_url}}"></td>
+            <td>{{variant.colour.name}}</td>
+            <td>{{variant.property.name}}</td>
+            <td>${{toDollars variant.cost}}</td>
+            <td>{{this.quantity}}</td>
+        </tr>
         {{/each}}
     </tbody>
 </table>
