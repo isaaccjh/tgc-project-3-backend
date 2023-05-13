@@ -101,7 +101,7 @@ async function main() {
     app.use("/users", routes.users);
     app.use("/cloudinary", routes.cloudinary);
     app.use("/cart", routes.shoppingCart);
-    app.use("/checkout", routes.checkout);
+    app.use("/checkout", express.json(), routes.checkout);
     app.use("/orders", routes.orders);
     app.use("/api/lures", express.json(), api.lures);
     app.use("/api/users", express.json(), api.users);
