@@ -129,17 +129,12 @@ router.post("/process_payment", express.raw({ type: "application/json" }),
             // console.log(JSON.parse(stripeSession.metadata.orders))
             const userId = (JSON.parse(stripeSession.metadata.orders))[0].user_id
             let orderData = getOrderData(userId, stripeSession, paymentIntent);
-            console.log("error is just after orderData");
             const orderItems = JSON.parse(stripeSession.metadata.orders);
-            console.log("error is just after orderItems");
             const newOrder = await orderDataLayer.addOrder(orderData);
-            console.log("error is just after newOrder");
             const order = await orderDataLayer.findOrderByStripeId(stripeSession.id);
-            console.log("error is just after order");
             orderItems.forEach(item => {
                 const newItem = orderDataLayer.addOrderItem(order.id, item.variant_id, item.quantity);
             })
-            console.log("error is just after orderItems.forEach");
         }
         res.send({ received: true });
 
