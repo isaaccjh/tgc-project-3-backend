@@ -44,6 +44,16 @@ const getOrderItemsByOrderId = async (orderId) => {
     return orderItems;
 }
 
+const getOrdersByUserId = async (userId) => {
+    const orders = await Order.collection().where({
+        "user_id": userId
+    }).fetch({
+        require: false,
+        withRelated: ["order_status"]
+    });
+    return orders;
+}
+
 
 
 
@@ -53,5 +63,6 @@ module.exports = {
     addOrder,
     addOrderItem,
     findOrderByStripeId,
-    getOrderItemsByOrderId
+    getOrderItemsByOrderId,
+    getOrdersByUserId
 }
