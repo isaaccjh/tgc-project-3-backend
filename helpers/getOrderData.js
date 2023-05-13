@@ -20,14 +20,6 @@ const getOrderData = (userId, stripeSession, paymentIntent) => {
         "billing_address_line_2": stripeSession.customer_details.address.line2,
         "stripe_id": stripeSession.id
     }
-    // console.log(paymentIntent);
-    // console.log("User ID =>", req.session.user.id);
-    // console.log("Order Status ID =>", "Order Status ID: 2 ");
-    // console.log("Payment Type =>", paymentIntent.payment_method_types[0]);
-    // console.log("Billing Address =>", stripeSession.customer_details);
-    // console.log("Shipping Address =>", stripeSession.shipping_details);
-    // console.log("Total Cost =>", stripeSession.amount_total);
-    // console.log("Order Date =>", stripeSession.created);
     return orderData;
 }
 
