@@ -133,8 +133,13 @@ router.post("/process_payment", express.raw({ type: "application/json" }),
             const newOrder = await orderDataLayer.addOrder(orderData);
             const order = await orderDataLayer.findOrderByStripeId(stripeSession.id);
             orderItems.forEach(item => {
-                const newItem = orderDataLayer.addOrderItem(order.id, item.variant_id, item.quantity);
+                 orderDataLayer.addOrderItem(order.id, item.variant_id, item.quantity);
             })
+
+            // after checking out, clear cart items from user
+             await orderDataLayer.clearUserCart(userId);
+
+
         }
         res.send({ received: true });
 

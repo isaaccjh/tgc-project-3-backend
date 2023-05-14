@@ -47,6 +47,15 @@ const updateQuantity = async (userId, variantId, newQuantity) => {
         return true;
     }
     return false;
+};
+
+const clearUserCart = async (userId) => {
+    let userCart = await getCart(userId);
+    if (userCart) {
+        userCart.destroy();
+        return true;
+    };
+    return false;
 }
 
 
@@ -55,5 +64,6 @@ module.exports = {
     getCartItemByUserAndVariant,
     createCartItem,
     removeFromCart,
-    updateQuantity
+    updateQuantity,
+    clearUserCart
 }
