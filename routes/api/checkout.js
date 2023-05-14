@@ -6,6 +6,7 @@ const Stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const { getOrderData } = require("../../helpers/getOrderData");
 const orderDataLayer = require("../../dal/orders");
+const cartDataLayer = require("../../dal/cart_items")
 
 router.get("/:user_id", express.json(),  async (req, res) => {
     const cart = new CartServices(req.params.user_id);
@@ -137,7 +138,7 @@ router.post("/process_payment", express.raw({ type: "application/json" }),
             })
 
             // after checking out, clear cart items from user
-             await orderDataLayer.clearUserCart(userId);
+             await cartDataLayer.clearUserCart(userId);
 
 
         }
