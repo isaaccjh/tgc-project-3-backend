@@ -51,7 +51,14 @@ const updateQuantity = async (userId, variantId, newQuantity) => {
 
 const clearUserCart = async (userId) => {
     let userCart = await getCart(userId);
-    console.log(userCart.toJSON());
+    // running through the cart to clear all of them
+    if (userCart) {
+        userCart.forEach(async (item) => {
+            await item.destroy();
+        });
+        return true;
+    };
+    return false;
 }
 
 
