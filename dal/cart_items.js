@@ -51,11 +51,7 @@ const updateQuantity = async (userId, variantId, newQuantity) => {
 
 const clearUserCart = async (userId) => {
     let userCart = await getCart(userId);
-    if (userCart) {
-        userCart.destroy();
-        return true;
-    };
-    return false;
+    console.log(userCart);
 }
 
 
