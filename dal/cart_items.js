@@ -51,7 +51,7 @@ const updateQuantity = async (userId, variantId, newQuantity) => {
 
 const clearUserCart = async (userId) => {
     let userCart = await getCart(userId);
-    console.log(userCart);
+    console.log(userCart.toJSON());
 }
 
 
