@@ -55,7 +55,7 @@ const getOrdersByUserId = async (userId) => {
 }
 
 const getAllOrderStatus = async () => {
-    const orderStatus = await OrderStatus.fetchAll().map(status => [status.get("id"), status.get("name")])
+    const orderStatus = await OrderStatus.fetchAll().map(status => [status.get("id"), status.get("order_status")])
     return orderStatus;
 }
 

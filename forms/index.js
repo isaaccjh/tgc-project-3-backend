@@ -308,6 +308,7 @@ const createLureSearchForm = (series) => {
 const createOrderStatusUpdateForm = (order_statuses) => {
     return forms.create({
         "order_status_id": fields.string({
+            label: "Order Status",
             required: true,
             errorAfterField: true,
             cssClasses: {
