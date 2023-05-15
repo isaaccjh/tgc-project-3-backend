@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-import { checkIfAdmin, checkIfAuthenticated } from "../middlewares";
+const { checkIfAdmin } = require("../middlewares")
 
 const orderDataLayer = require("../dal/orders");
 

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-import { checkIfAuthenticated } from "../middlewares";
+const { checkIfAuthenticated } = require("../middlewares");
 
 const CartServices = require("../services/cart_services");
 const lureDataLayer = require("../dal/lures");
