@@ -43,7 +43,7 @@ router.post("/:order_id", [checkIfAuthenticated, checkIfAdmin], async (req, res)
             order.set(form.data);
             await order.save();
             req.flash("success_messages", "Order Status has been updated")
-            res.redirect(`/orders/${req.params.order_id}`)
+            res.redirect("/orders")
         },
         "error": (form) => {
             res.render("orders/details", {
