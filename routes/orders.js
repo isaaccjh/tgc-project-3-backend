@@ -19,9 +19,9 @@ router.get("/:order_id", [checkIfAuthenticated, checkIfAdmin], async (req, res) 
     const orders = await orderDataLayer.getOrderItemsByOrderId(req.params.order_id);
     const allOrderStatus = await orderDataLayer.getAllOrderStatus();
 
-    console.log(allOrderStatus.toJSON());
+    console.log(allOrderStatus);
 
-    const orderStatusForm = createOrderStatusUpdateForm();
+    const orderStatusForm = createOrderStatusUpdateForm(allOrderStatus);
 
     res.render("orders/details", {
         orders: orders.toJSON(),
