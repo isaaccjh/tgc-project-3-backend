@@ -22,6 +22,8 @@ router.get("/:order_id", [checkIfAuthenticated, checkIfAdmin], async (req, res) 
 
     const orderStatusForm = createOrderStatusUpdateForm(allOrderStatus);
     orderStatusForm.fields.order_status_id.value = orders.get("order_status_id");
+    console.log("this is the orders.get:", orders.get("order_status_id"));
+    console.log("value of orderStatusForm:", orderStatusForm.fields.order_status_id.value)
 
     res.render("orders/details", {
         orders: orders.toJSON(),
