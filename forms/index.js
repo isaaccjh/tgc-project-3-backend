@@ -176,13 +176,15 @@ const createRegistrationForm = () => {
             errorAfterField: true,
             cssClasses: {
                 label: ["form-label, mt-2"]
-            }
+            },
+            validators: [validators.maxlength("value: 100")]
         }),
         "last_name": fields.string({
             errorAfterField: true,
             cssClasses: {
                 label: ["form-label, mt-2"]
-            }
+            },
+            validators: [validators.maxlength("value: 100")]
         }),
         "username": fields.string({
             errorAfterField: true,
