@@ -59,6 +59,15 @@ const getAllOrderStatus = async () => {
     return orderStatus;
 }
 
+const getOrderByOrderId = async (orderId) => {
+    const order = await Order.where({
+        "id": orderId
+    }).fetch({
+        require: false
+    });
+    return order;
+}
+
 
 
 
@@ -70,5 +79,6 @@ module.exports = {
     findOrderByStripeId,
     getOrderItemsByOrderId,
     getOrdersByUserId,
-    getAllOrderStatus
+    getAllOrderStatus,
+    getOrderByOrderId
 }
