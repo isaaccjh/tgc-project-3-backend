@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
+import { checkIfAuthenticated } from "../middlewares";
+
 const CartServices = require("../services/cart_services");
 const lureDataLayer = require("../dal/lures");
 
 router.get("/", async (req, res) => {
     let cart = new CartServices(req.session.user.id);
-    const getCart = await (await cart.getCart()).toJSON()
+    const getCart = (await cart.getCart()).toJSON()
     res.render("carts/index", {
         "shoppingCart": getCart
     })
