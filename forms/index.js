@@ -32,7 +32,8 @@ const createLureForm = (series) => {
             errorAfterField: true,
             cssClasses: {
                 label: ["form-label, mt-2"]
-            }
+            },
+            validators: [validators.required()]
         }),
         "description":fields.string({
             required: true,
@@ -152,14 +153,16 @@ const createRegistrationForm = () => {
             errorAfterField: true,
             cssClasses: {
                 label: ["form-label, mt-2"]
-            }
+            },
+            validators: [validators.email(), validators.required()]
         }),
         "password": fields.password({
             required: true,
             errorAfterField: true,
             cssClasses: {
                 label: ["form-label, mt-2"]
-            }
+            },
+            validators: [validators.required()]
         }),
         "confirm_password": fields.password({
             required: true,
@@ -167,7 +170,7 @@ const createRegistrationForm = () => {
             cssClasses: {
                 label: ["form-label, mt-2"]
             },
-            validators: [validators.matchField("password")]
+            validators: [validators.matchField("password"), validators.required()]
         }),
         "first_name": fields.string({
             errorAfterField: true,
@@ -185,13 +188,15 @@ const createRegistrationForm = () => {
             errorAfterField: true,
             cssClasses: {
                 label: ["form-label, mt-2"]
-            }
+            },
+            validators: [validators.alphanumeric()]
         }),
         "contact_number": fields.string({
             errorAfterField: true,
             cssClasses: {
                 label: ["form-label, mt-2"]
-            }
+            },
+            validators: [validators.integer()]
         }),
         "profile_picture": fields.string({
             widget: widgets.hidden()
