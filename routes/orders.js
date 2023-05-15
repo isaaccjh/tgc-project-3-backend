@@ -27,10 +27,13 @@ router.get("/:order_id", [checkIfAuthenticated, checkIfAdmin], async (req, res) 
 
     res.render("orders/details", {
         orderItems: orderItems.toJSON(),
+        order: order.toJSON(),
         form: orderStatusForm.toHTML(bootstrapField)
     })
 })
 
-router.get("/:")
+router.post("/:order_id", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
+
+})
 
 module.exports = router;
