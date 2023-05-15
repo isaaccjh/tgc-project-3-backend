@@ -12,4 +12,6 @@ router.get("/:user_id", async (req, res) => {
     }   
 });
 
+router.get("")
+
 module.exports = router;
