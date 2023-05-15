@@ -21,7 +21,10 @@ router.get("/:order_id", [checkIfAuthenticated, checkIfAdmin], async (req, res) 
     console.log(allOrderStatus);
 
     const orderStatusForm = createOrderStatusUpdateForm(allOrderStatus);
+    console.log("orders object is here:", orders.toJSON());
+    console.log("order status form fields is here:", orderStatusForm.fields)
     orderStatusForm.fields.order_status_id.value = orders.get("order_status_id");
+
     console.log("this is the orders.get:", orders.get("order_status_id"));
     console.log("value of orderStatusForm:", orderStatusForm.fields.order_status_id.value)
 
