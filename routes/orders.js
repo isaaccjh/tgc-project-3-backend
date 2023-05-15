@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+import { checkIfAuthenticated } from "../middlewares";
+
 const orderDataLayer = require("../dal/orders");
 
 router.get("/", async (req, res) => {
