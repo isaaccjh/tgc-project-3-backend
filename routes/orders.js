@@ -33,7 +33,33 @@ router.get("/:order_id", [checkIfAuthenticated, checkIfAdmin], async (req, res) 
 })
 
 router.post("/:order_id", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
+    const order = getOrderByOrderId(req.params.order_id);
+    const allOrderStatus = await orderDataLayer.getAllOrderStatus();
+    const orderItems = await orderDataLayer.getOrderItemsByOrderId(req.params.order_id);
 
+    const orderStatusForm = createOrderStatusUpdateForm(allOrderStatus);
+    orderStatusForm.handle(req, {
+        "success": async (form) => {
+            order.set(form.data);
+            await order.save();
+            req.flash("success_messages", "Order Status has been updated")
+            res.redirect(`/orders/${req.params.order_id}`)
+        },
+        "error": (form) => {
+            res.render("orders/details", {
+                "form": form.toHTML(bootstrapField),
+                "order": order.toJSON(),
+                "orderItems": orderItems.toJSON()
+            })
+        },
+        "empty": (form) => {
+            res.render("orders/details", {
+                "form": form.toHTML(bootstrapField),
+                "order": order.toJSON(),
+                "orderItems": orderItems.toJSON()
+            })
+        }
+    })
 })
 
 module.exports = router;
