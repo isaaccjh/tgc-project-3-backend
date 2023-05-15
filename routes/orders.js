@@ -33,7 +33,7 @@ router.get("/:order_id", [checkIfAuthenticated, checkIfAdmin], async (req, res) 
 })
 
 router.post("/:order_id", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
-    const order = getOrderByOrderId(req.params.order_id);
+    const order = await orderDataLayer.getOrderByOrderId(req.params.order_id);
     const allOrderStatus = await orderDataLayer.getAllOrderStatus();
     const orderItems = await orderDataLayer.getOrderItemsByOrderId(req.params.order_id);
 
