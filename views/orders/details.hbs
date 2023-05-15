@@ -11,6 +11,12 @@
     </div>
 </div>
 <hr>
+<form method="post">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+    {{{form}}}
+    <a href='/orders'class="btn btn-danger mt-3 me-2">Cancel Update</a>
+    <input type="submit" value="Update Order Status" class="btn btn-primary mt-3"/>
+</form>
 <table class="table">
     <thead>
         <tr>
