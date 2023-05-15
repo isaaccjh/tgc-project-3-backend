@@ -320,6 +320,14 @@ const createOrderStatusUpdateForm = (order_statuses) => {
     })
 }
 
+// const createOrderSearchForm = (order_statuses) => {
+//     return forms.create({
+//         "user_id": fields.string({
+//             label: 
+//         }) 
+//     })
+// }
+
 module.exports = { 
     createLureForm, 
     createVariantForm, 
