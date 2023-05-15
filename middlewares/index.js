@@ -29,7 +29,7 @@ const checkIfAuthenticatedJWT = (req, res, next) => {
 }
 
 const checkIfAdmin = (req, res, next) => {
-    if (req.session.user.role_id === 2) {
+    if (req.session.user.role === 2) {
         next()
     } else {
         req.flash("error_messages", "Please contact an administrator to access this page.")
