@@ -19,10 +19,14 @@ router.get("/", checkIfAuthenticated, async (req, res) => {
                 q.where("name", "like", `%${form.data.name}%`)
             }
 
-            // if (form.data.series) {
-            //     q.query("join", "series", "lures.serie_id", "series.id")
-            //         .where("lures.name", "like", form.data.series)
-            // }
+            if (form.data.series) {
+                console.log("🚀 ~ file: lures.js:23 ~ ", form.data.series)
+                
+                q.query("join", "series", "lures.serie_id", "series.id")
+                    .where("lures.name", "like", form.data.series)
+                console.log("what is in q ", q);
+            }
+            //select form.data.series from lures JOIN series on lures.series_id = series.id
 
             if (form.data.hook) {
                 q.where("hook", "like", `%${form.data.hook}%`)
