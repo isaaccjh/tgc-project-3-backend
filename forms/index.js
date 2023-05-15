@@ -305,6 +305,19 @@ const createLureSearchForm = (series) => {
     })
 }
 
+const createOrderStatusUpdateForm = (order_statuses) => {
+    return forms.create({
+        "order_status_id": fields.string({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label"]
+            },
+            widget: widgets.select(),
+            choices: order_statuses
+        })
+    })
+}
 
 module.exports = { 
     createLureForm, 
@@ -312,5 +325,6 @@ module.exports = {
     bootstrapField, 
     createRegistrationForm,
     createLoginForm,
-    createLureSearchForm
+    createLureSearchForm,
+    createOrderStatusUpdateForm
  };
