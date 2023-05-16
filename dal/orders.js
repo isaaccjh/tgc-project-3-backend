@@ -10,9 +10,13 @@ const getAllOrders = async () => {
 
 const searchOrders = async (formData) => {
     const q = Order.collection();
-
-
+    console.log("formData:",formData);
     
+    const orders = q.fetch({
+        require: false,
+        withRelated: ["user", "order_status"]
+    });
+    return orders;
 }
 
 const addOrder = async (orderInfo) => {
@@ -87,5 +91,6 @@ module.exports = {
     getOrderItemsByOrderId,
     getOrdersByUserId,
     getAllOrderStatus,
-    getOrderByOrderId
+    getOrderByOrderId,
+    searchOrders
 }
