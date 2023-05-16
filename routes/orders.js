@@ -4,13 +4,15 @@ const router = express.Router();
 const { checkIfAdmin, checkIfAuthenticated } = require("../middlewares")
 
 const orderDataLayer = require("../dal/orders");
-const { createOrderStatusUpdateForm, bootstrapField } = require("../forms");
+const { createOrderSearchForm, createOrderStatusUpdateForm, bootstrapField } = require("../forms");
 
 router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
     const orders = await orderDataLayer.getAllOrders();
+    const orderSearchForm = createOrderSearchForm();
 
     res.render("orders/index", {
-        orders: orders.toJSON()
+        orders: orders.toJSON(),
+        form: orderSearchForm.toHTML(bootstrapField)
     });
 })
 

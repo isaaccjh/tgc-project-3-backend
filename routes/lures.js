@@ -6,19 +6,6 @@ const { bootstrapField, createLureForm, createVariantForm, createLureSearchForm 
 const { updateValues } = require("../helpers/updateForm");
 const { checkIfAuthenticated, checkIfAdmin } = require("../middlewares");
 const lureDataLayer = require("../dal/lures");
-const { knex } = require("../bookshelf");
-
-async function querySeries(data) {
-    try {
-        const result = await knex('series')
-            .join('lures', 'series.id', '=', 'lures.serie_id')
-            .select('*').where('lures.serie_id', data);
-        return result;
-    } catch (e) {
-        console.log("🚀 ~ file: lures.js:15 ~ querySeries ~ e:", e)
-
-    }
-}
 
 router.get("/", checkIfAuthenticated, async (req, res) => {
     const allSeries = await lureDataLayer.getAllSeries();
@@ -33,16 +20,11 @@ router.get("/", checkIfAuthenticated, async (req, res) => {
             }
 
             if (form.data.series) {
-                // console.log("🚀 ~ file: lures.js:23 ~ ", form.data.series)
-
-                // q.query("join", "series", "lures.serie_id", "series.id")
-                //     .where("lures.name", "like", form.data.series)
-                // console.log("what is in q ", q);
-                const response = querySeries(form.data.series);
-                console.log("🚀 ~ file: lures.js:30 ~ response", response);
-
+                console.log("form.data.series:", form.data.series)
+                q.query("join", "series", "lures.serie_id", "series.id")
+                    .where("lures.name", "like", form.data.series)
+                console.log("what is in q:", q)
             }
-            //select form.data.series from lures JOIN series on lures.series_id = series.id
 
             if (form.data.hook) {
                 q.where("hook", "like", `%${form.data.hook}%`)
