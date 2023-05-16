@@ -8,6 +8,13 @@ const getAllOrders = async () => {
     return orders;
 }
 
+const searchOrders = async (formData) => {
+    const q = Order.collection();
+
+
+    
+}
+
 const addOrder = async (orderInfo) => {
     const order = new Order(orderInfo);
     await order.save();
