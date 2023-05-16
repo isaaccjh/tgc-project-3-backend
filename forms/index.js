@@ -105,7 +105,8 @@ const createVariantForm = (colours, property, lure_id) => {
                 label: ["form-label, mt-2"]
             },
             widget: widgets.select(),
-            choices: colours
+            choices: colours,
+            validators: [validators.required()]
         }),
         "property_id": fields.string({
             label: "Property",
@@ -115,21 +116,25 @@ const createVariantForm = (colours, property, lure_id) => {
                 label: ["form-label, mt-2"]
             },
             widget: widgets.select(),
-            choices: property
+            choices: property,
+            validators: [validators.required()]
         }),
         "stock": fields.number({
             required: true,
             errorAfterField: true,
             cssClasses: {
                 label: ["form-label mt-2"]
-            }
+            },
+            validators: [validators.required(), validators.integer()]
         }),
         "cost": fields.number({
+            label: "Cost (in cents)",
             required: true,
             errorAfterField: true,
             cssClasses: {
                 label: ["form-label mt-2"]
-            }
+            },
+            validators: [validators.required(), validators.integer()]
         }),
         "lure_id": fields.number({
             required: true,
@@ -162,7 +167,7 @@ const createRegistrationForm = () => {
             cssClasses: {
                 label: ["form-label, mt-2"]
             },
-            validators: [validators.required()]
+            validators: [validators.required(), validators.regexp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", "Your password has to contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character")]
         }),
         "confirm_password": fields.password({
             required: true,
@@ -320,13 +325,53 @@ const createOrderStatusUpdateForm = (order_statuses) => {
     })
 }
 
-// const createOrderSearchForm = (order_statuses) => {
-//     return forms.create({
-//         "user_id": fields.string({
-//             label: 
-//         }) 
-//     })
-// }
+const createOrderSearchForm = (order_statuses) => {
+    return forms.create({
+        "email": fields.string({
+            label: "E-mail",
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label"]
+            },
+            validators: [validators.email()]
+        }),
+        "min_total": fields.string({
+            label: "Min. Total Cost",
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label"]
+            }
+        }),
+        "max_total": fields.string({
+            label: "Max. Total Cost",
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label"]
+            }
+        }),
+        "order_status": fields.string({
+            label: "Order Status",
+            required: false,
+            errorAfterField: true,
+            cssClasses:{
+                label: ["form-label"]
+            },
+            widget: widgets.select(),
+            choices: order_statuses
+        }),
+        "lure_name": fields.string({
+            label: "Lure",
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ["form-label"]
+            }
+        })
+    })
+}
 
 module.exports = { 
     createLureForm, 
@@ -335,5 +380,6 @@ module.exports = {
     createRegistrationForm,
     createLoginForm,
     createLureSearchForm,
-    createOrderStatusUpdateForm
+    createOrderStatusUpdateForm,
+    createOrderSearchForm
  };
