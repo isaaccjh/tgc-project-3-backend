@@ -17,7 +17,7 @@ router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
         orders: orders.toJSON(),
         form: orderSearchForm.toHTML(bootstrapField)
     });
-})
+});
 
 router.get("/:order_id", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
     const orderItems = await orderDataLayer.getOrderItemsByOrderId(req.params.order_id);

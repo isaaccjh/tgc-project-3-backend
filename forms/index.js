@@ -367,7 +367,7 @@ const createOrderSearchForm = (order_statuses) => {
             required: false,
             errorAfterField: true,
             cssClasses: {
-                label: ["form-label"]
+                label: ["form-label"],
             }
         })
     })
