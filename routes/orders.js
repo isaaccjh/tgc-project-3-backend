@@ -16,9 +16,10 @@ router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
     orderSearchForm.handle(req, {
         "success": async (form) => {
             if (form.data.email) {
+                console.log("form.data.email:", form.data.email);
                 console.log("before filter:", q.toJSON());
                 q.query("join", "users", "orders.user_id", "users.id")
-                    .where("users.email", "like" `%${form.data.email}%`);
+                    .where("users.email", "like", `%${form.data.email}%`);
                 console.log("after filter:", q.toJSON())
             }
         },
