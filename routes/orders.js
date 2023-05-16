@@ -25,14 +25,14 @@ router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
                 form: orderSearchForm.toHTML(bootstrapField)
             });
         },
-        "empty": () => {
+        "empty": (form) => {
             const orders = orderDataLayer.searchOrders(form.data);
             res.render("orders/index", {
                 orders: orders.toJSON(),
                 form: orderSearchForm.toHTML(bootstrapField)
             })
         },
-        "error": () => {
+        "error": (form) => {
             const orders = orderDataLayer.searchOrders(form.data);
             res.render("orders/index", {
                 orders: orders.toJSON(),
