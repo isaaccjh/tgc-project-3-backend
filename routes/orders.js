@@ -19,7 +19,7 @@ router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
     orderSearchForm.handle(req, {
         "success": async (form) => {
             const orders = orderDataLayer.searchOrders(form.data);
-
+            console.log("orders:",orders);
             res.render("orders/index", {
                 orders: orders.toJSON(),
                 form: orderSearchForm.toHTML(bootstrapField)
