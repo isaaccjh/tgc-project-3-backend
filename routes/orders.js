@@ -8,7 +8,10 @@ const { createOrderSearchForm, createOrderStatusUpdateForm, bootstrapField } = r
 
 router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
     const orders = await orderDataLayer.getAllOrders();
-    const orderSearchForm = createOrderSearchForm();
+    const allOrderStatus = await orderDataLayer.getAllOrderStatus();
+    allOrderStatus.unshift([0, "----"]);
+
+    const orderSearchForm = createOrderSearchForm(allOrderStatus);
 
     res.render("orders/index", {
         orders: orders.toJSON(),
