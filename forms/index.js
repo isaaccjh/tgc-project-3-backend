@@ -337,7 +337,7 @@ const createOrderSearchForm = (order_statuses) => {
             validators: [validators.email()]
         }),
         "min_total": fields.string({
-            label: "Min. Total Cost",
+            label: "Min. Total Cost ($)",
             required: false,
             errorAfterField: true,
             cssClasses: {
@@ -346,7 +346,7 @@ const createOrderSearchForm = (order_statuses) => {
             }
         }),
         "max_total": fields.string({
-            label: "Max. Total Cost",
+            label: "Max. Total Cost ($)",
             required: false,
             errorAfterField: true,
             cssClasses: {

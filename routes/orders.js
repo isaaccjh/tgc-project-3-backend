@@ -36,10 +36,10 @@ router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
         },
         "success": async (form) => {
             if (form.data.min_total) {
-                q.where("total_cost", ">=", form.data.min_total)
+                q.where("total_cost", ">=", form.data.min_total * 100)
             }
             if (form.data.max_total) {
-                q.where("total_cost", "<=", form.data.max_total)
+                q.where("total_cost", "<=", form.data.max_total & 100)
             }
 
             let orders = await q.fetch({
