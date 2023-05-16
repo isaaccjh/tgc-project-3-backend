@@ -7,7 +7,6 @@ const orderDataLayer = require("../dal/orders");
 const { createOrderSearchForm, createOrderStatusUpdateForm, bootstrapField } = require("../forms");
 
 router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
-    const orders = await orderDataLayer.getAllOrders();
     const allOrderStatus = await orderDataLayer.getAllOrderStatus();
     allOrderStatus.unshift([0, "----"]);
 
@@ -22,14 +21,29 @@ router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
                     .where("users.email", "like", `%${form.data.email}%`);
                 console.log("after filter:", q.toJSON())
             }
+
+            const orders = q.fetch({
+                withRelated: ["order_item"]
+            });
+
+            res.render("orders/index", {
+                orders: orders.toJSON(),
+                form: orderSearchForm.toHTML(bootstrapField)
+            });
         },
         "empty": (form) => {
+            const orders = q.fetch({
+                withRelated: ["order_item"]
+            });
             res.render("orders/index", {
                 orders: orders.toJSON(),
                 form: orderSearchForm.toHTML(bootstrapField)
             })
         },
         "error": (form) => {
+            const orders = q.fetch({
+                withRelated: ["order_item"]
+            });
             res.render("orders/index", {
                 orders: orders.toJSON(),
                 form: orderSearchForm.toHTML(bootstrapField)
@@ -37,10 +51,7 @@ router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
         }
     })
 
-    res.render("orders/index", {
-        orders: orders.toJSON(),
-        form: orderSearchForm.toHTML(bootstrapField)
-    });
+
 });
 
 router.get("/:order_id", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
