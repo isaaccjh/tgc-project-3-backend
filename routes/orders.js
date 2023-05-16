@@ -12,6 +12,8 @@ router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
 
     const orderSearchForm = createOrderSearchForm(allOrderStatus);
     const q = Order.collection();
+    console.log("reached here [after q is defined]");
+    console.log("before any filtering:", q.fetch({}))
     orderSearchForm.handle(req, {
         "success": async (form) => {
             if (form.data.email) {
@@ -22,28 +24,22 @@ router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
                 console.log("after filter:", q.toJSON())
             }
 
-            const orders = q.fetch({
-                withRelated: ["order_item"]
-            });
+            const orders = q.fetch({});
 
             res.render("orders/index", {
                 orders: orders.toJSON(),
                 form: orderSearchForm.toHTML(bootstrapField)
             });
         },
-        "empty": (form) => {
-            const orders = q.fetch({
-                withRelated: ["order_item"]
-            });
+        "empty": () => {
+            const orders = q.fetch({});
             res.render("orders/index", {
                 orders: orders.toJSON(),
                 form: orderSearchForm.toHTML(bootstrapField)
             })
         },
-        "error": (form) => {
-            const orders = q.fetch({
-                withRelated: ["order_item"]
-            });
+        "error": () => {
+            const orders = q.fetch({});
             res.render("orders/index", {
                 orders: orders.toJSON(),
                 form: orderSearchForm.toHTML(bootstrapField)
