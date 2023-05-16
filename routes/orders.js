@@ -2,58 +2,30 @@ const express = require("express");
 const router = express.Router();
 
 const { checkIfAdmin, checkIfAuthenticated } = require("../middlewares")
-const { Order } = require("../models")
+
 const orderDataLayer = require("../dal/orders");
 const { createOrderSearchForm, createOrderStatusUpdateForm, bootstrapField } = require("../forms");
 
 router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
-    const orders = orderDataLayer.getAllOrders();
-
-
+    const orders = await orderDataLayer.getAllOrders();
     const allOrderStatus = await orderDataLayer.getAllOrderStatus();
-    allOrderStatus.unshift([0, "----"]);
+    allOrderStatus.unshift([0, "----"])
 
-    const orderSearchForm = createOrderSearchForm(allOrderStatus);
-    const q = Order.collection();
 
-    orderSearchForm.handle(req, {
-        "success": async (form) => {
-            const orders = orderDataLayer.searchOrders(form.data);
-            console.log("orders:",orders);
-            res.render("orders/index", {
-                orders: orders.toJSON(),
-                form: orderSearchForm.toHTML(bootstrapField)
-            });
-        },
-        "empty": (form) => {
-            const orders = orderDataLayer.searchOrders(form.data);
-            res.render("orders/index", {
-                orders: orders.toJSON(),
-                form: orderSearchForm.toHTML(bootstrapField)
-            })
-        },
-        "error": (form) => {
-            const orders = orderDataLayer.searchOrders(form.data);
-            res.render("orders/index", {
-                orders: orders.toJSON(),
-                form: orderSearchForm.toHTML(bootstrapField)
-            })
-        }
-    })
+    const orderSearchForm = createOrderSearchForm();
 
     res.render("orders/index", {
         orders: orders.toJSON(),
         form: orderSearchForm.toHTML(bootstrapField)
     });
-
-});
+})
 
 router.get("/:order_id", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
     const orderItems = await orderDataLayer.getOrderItemsByOrderId(req.params.order_id);
     const allOrderStatus = await orderDataLayer.getAllOrderStatus();
 
     const order = await orderDataLayer.getOrderByOrderId(req.params.order_id)
-
+    console.log("order is here:", order.toJSON());
 
     const orderStatusForm = createOrderStatusUpdateForm(allOrderStatus);
     orderStatusForm.fields.order_status_id.value = order.get("order_status_id");
