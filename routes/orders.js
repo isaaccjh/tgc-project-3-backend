@@ -19,7 +19,7 @@ router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
     console.log("before any filtering:", q.fetch({
         withRelated: ["user", "order_status"],
         require: true
-    }))
+    }).toJSON())
 
     orderSearchForm.handle(req, {
         "success": async (form) => {
