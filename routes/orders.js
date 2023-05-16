@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { checkIfAdmin, checkIfAuthenticated } = require("../middlewares")
-
+const { Order } = require("../models")
 const orderDataLayer = require("../dal/orders");
 const { createOrderSearchForm, createOrderStatusUpdateForm, bootstrapField } = require("../forms");
 
@@ -12,6 +12,17 @@ router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
     allOrderStatus.unshift([0, "----"]);
 
     const orderSearchForm = createOrderSearchForm(allOrderStatus);
+    const q = Order.collection();
+    orderSearchForm.handle(req, {
+        "success": async (form) => {
+            if (form.data.email) {
+                console.log("before filter:", q.toJSON());
+                q.query("join", "users", "orders.user_id", "users.id")
+                    .where("users.email", "like" `%${form.data.email}%`);
+                console.log("after filter:", q.toJSON())
+            }
+        }
+    })
 
     res.render("orders/index", {
         orders: orders.toJSON(),
@@ -24,7 +35,7 @@ router.get("/:order_id", [checkIfAuthenticated, checkIfAdmin], async (req, res) 
     const allOrderStatus = await orderDataLayer.getAllOrderStatus();
 
     const order = await orderDataLayer.getOrderByOrderId(req.params.order_id)
-    console.log("order is here:", order.toJSON());
+
 
     const orderStatusForm = createOrderStatusUpdateForm(allOrderStatus);
     orderStatusForm.fields.order_status_id.value = order.get("order_status_id");

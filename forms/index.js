@@ -341,7 +341,8 @@ const createOrderSearchForm = (order_statuses) => {
             required: false,
             errorAfterField: true,
             cssClasses: {
-                label: ["form-label"]
+                label: ["form-label, col-6"],
+                input: ["col-6"]
             }
         }),
         "max_total": fields.string({
@@ -349,7 +350,8 @@ const createOrderSearchForm = (order_statuses) => {
             required: false,
             errorAfterField: true,
             cssClasses: {
-                label: ["form-label"]
+                label: ["form-label, col-6"],
+                input: ["col-6"]
             }
         }),
         "order_status": fields.string({
