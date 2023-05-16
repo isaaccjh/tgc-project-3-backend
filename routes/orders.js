@@ -21,6 +21,18 @@ router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
                     .where("users.email", "like" `%${form.data.email}%`);
                 console.log("after filter:", q.toJSON())
             }
+        },
+        "empty": (form) => {
+            res.render("orders/index", {
+                orders: orders.toJSON(),
+                form: orderSearchForm.toHTML(bootstrapField)
+            })
+        },
+        "error": (form) => {
+            res.render("orders/index", {
+                orders: orders.toJSON(),
+                form: orderSearchForm.toHTML(bootstrapField)
+            })
         }
     })
 
