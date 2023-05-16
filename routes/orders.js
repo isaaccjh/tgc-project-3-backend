@@ -12,7 +12,7 @@ router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
     allOrderStatus.unshift([0, "----"])
 
 
-    const orderSearchForm = createOrderSearchForm();
+    const orderSearchForm = createOrderSearchForm(allOrderStatus);
 
     res.render("orders/index", {
         orders: orders.toJSON(),
