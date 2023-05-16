@@ -16,14 +16,13 @@ router.get("/", checkIfAuthenticated, async (req, res) => {
     searchForm.handle(req, {
         "success": async (form) => {
             if (form.data.name) {
-                q.where("name", "like", `%${form.data.name}%`)
+                q.where("name", "like", `%${form.data.name}%`);
             }
 
             if (form.data.series) {
                 q.query("join", "series", "lures.serie_id", "series.id")
-                    .where("lures.serie_id", "=", form.data.series)
-
-            }
+                    .where("lures.serie_id", "=", form.data.series);
+            };
 
             if (form.data.hook) {
                 q.where("hook", "like", `%${form.data.hook}%`)
