@@ -7,13 +7,20 @@ const orderDataLayer = require("../dal/orders");
 const { createOrderSearchForm, createOrderStatusUpdateForm, bootstrapField } = require("../forms");
 
 router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
+    const orders = orderDataLayer.getAllOrders();
+
+
     const allOrderStatus = await orderDataLayer.getAllOrderStatus();
     allOrderStatus.unshift([0, "----"]);
 
     const orderSearchForm = createOrderSearchForm(allOrderStatus);
     const q = Order.collection();
-    console.log("reached here [after q is defined]");
-    console.log("before any filtering:", q.fetch({}).toJSON())
+
+    console.log("before any filtering:", q.fetch({
+        withRelated: ["user", "order_status"],
+        require: true
+    }))
+
     orderSearchForm.handle(req, {
         "success": async (form) => {
             if (form.data.email) {
@@ -47,6 +54,10 @@ router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
         }
     })
 
+    res.render("orders/index", {
+        orders: orders.toJSON(),
+        form: orderSearchForm.toHTML(bootstrapField)
+    });
 
 });
 
