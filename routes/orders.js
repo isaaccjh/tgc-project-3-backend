@@ -13,7 +13,7 @@ router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
     const orderSearchForm = createOrderSearchForm(allOrderStatus);
     const q = Order.collection();
     console.log("reached here [after q is defined]");
-    console.log("before any filtering:", q.fetch({}))
+    console.log("before any filtering:", q.fetch({}).toJSON())
     orderSearchForm.handle(req, {
         "success": async (form) => {
             if (form.data.email) {
