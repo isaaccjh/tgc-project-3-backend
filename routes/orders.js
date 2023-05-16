@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+const { Order } = require("../models")
+
 const { checkIfAdmin, checkIfAuthenticated } = require("../middlewares")
 
 const orderDataLayer = require("../dal/orders");
@@ -10,9 +12,45 @@ router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
     const orders = await orderDataLayer.getAllOrders();
     const allOrderStatus = await orderDataLayer.getAllOrderStatus();
     allOrderStatus.unshift([0, "----"])
-
-
     const orderSearchForm = createOrderSearchForm(allOrderStatus);
+    let q = Order.collection();
+
+    orderSearchForm.handle(req, {
+        "empty": async (form) => {
+            let orders = await q.fetch({
+                withRelated: ["user", "order_status"]
+            });
+            res.render("orders/index", {
+                orders: orders.toJSON(),
+                form: form.toHTML(bootstrapField)
+            })
+        },
+        "error": async (form) => {
+            let orders = await q.fetch({
+                withRelated: ["user", "order_status"]
+            });
+            res.render("orders/index", {
+                orders: orders.toJSON(),
+                form: form.toHTML(bootstrapField)
+            })
+        },
+        "success": async (form) => {
+            if (form.data.min_total) {
+                q.where("total_cost", ">=", form.data.min_total)
+            }
+            if (form.data.max_total) {
+                q.where("total_cost", "<=", form.data.max_total)
+            }
+
+            let orders = await q.fetch({
+                withRelated: ["user", "order_status"]
+            });
+            res.render("orders/index", {
+                orders: orders.toJSON(),
+                form: form.toHTML(bootstrapField)
+            })
+        }
+    })
 
     res.render("orders/index", {
         orders: orders.toJSON(),
