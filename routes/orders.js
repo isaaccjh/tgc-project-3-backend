@@ -52,10 +52,10 @@ router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
         }
     })
 
-    res.render("orders/index", {
-        orders: orders.toJSON(),
-        form: orderSearchForm.toHTML(bootstrapField)
-    });
+    // res.render("orders/index", {
+    //     orders: orders.toJSON(),
+    //     form: orderSearchForm.toHTML(bootstrapField)
+    // });
 })
 
 router.get("/:order_id", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
