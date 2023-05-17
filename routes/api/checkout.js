@@ -150,10 +150,9 @@ router.post(
         orderDataLayer.addOrderItem(order.id, item.variant_id, item.quantity);
       });
       // after checking out, clear cart items from user
-      console.log(userId);
       await cartDataLayer.clearUserCart(userId);
     }
-    res.redirect("http://localhost:3000/products");
+    res.send({ received: true });
   }
 );
 
