@@ -43,7 +43,7 @@ router.post("/update", async (req, res) => {
 
 router.post("/delete", async (req, res) => {
     try {
-        const cart = await cartDataLayer.removeFromCart(req.body.userId, req.body.variantId);
+        await cartDataLayer.removeFromCart(req.body.userId, req.body.variantId);
         res.status(200).send("Successfully removed from cart!")
     } catch (e) {
         res.status(404).send("Failed to delete, please try again later.")
