@@ -42,7 +42,7 @@ router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
                 q.where("total_cost", "<=", form.data.max_total * 100)
             };
             if (form.data.order_status) {
-                q.where("order_status_id", "=" form.data.order_status)
+                q.where("order_status_id", "=", form.data.order_status)
             }
 
             let orders = await q.fetch({
