@@ -47,7 +47,7 @@ router.post("/register", async (req, res) => {
     })
 
     await user.save();
-    return user;
+    res.send(user);
 });
 
 router.post("/login", async (req, res) => {
