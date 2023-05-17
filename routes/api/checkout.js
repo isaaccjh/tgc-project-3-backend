@@ -8,7 +8,7 @@ const { getOrderData } = require("../../helpers/getOrderData");
 const orderDataLayer = require("../../dal/orders");
 const cartDataLayer = require("../../dal/cart_items");
 
-router.get("/", [express.json(), checkIfAuthenticated], async (req, res) => {
+router.get("/", [express.json()], async (req, res) => {
     const cart = new CartServices(req.session.user.id);
     let items = await cart.getCart();
 
