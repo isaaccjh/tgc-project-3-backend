@@ -152,7 +152,6 @@ router.post(
       // after checking out, clear cart items from user
       await cartDataLayer.clearUserCart(userId);
     }
-    console.log("there is no error up till here");
     res.send({ received: true });
   }
 );
