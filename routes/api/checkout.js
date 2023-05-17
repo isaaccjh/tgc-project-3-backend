@@ -8,8 +8,8 @@ const { getOrderData } = require("../../helpers/getOrderData");
 const orderDataLayer = require("../../dal/orders");
 const cartDataLayer = require("../../dal/cart_items");
 
-router.get("/", [express.json()], async (req, res) => {
-    const cart = new CartServices(req.session.user.id);
+router.get("/:user_id/checkout", [express.json()], async (req, res) => {
+    const cart = new CartServices(req.params.user_id);
     let items = await cart.getCart();
 
     let lineItems = [];
@@ -33,7 +33,7 @@ router.get("/", [express.json()], async (req, res) => {
         }
         lineItems.push(lineItem);
         meta.push({
-            user_id: req.session.user.id,
+            user_id: req.params.user_id,
             variant_id: i.get("variant_id"),
             quantity: i.get("quantity"),
         });
