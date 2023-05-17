@@ -63,6 +63,7 @@ const clearUserCart = async (userId) => {
   // running through the cart to clear all of them
   if (userCart) {
     userCart.forEach(async (item) => {
+      console.log("destroying!");
       await item.destroy();
     });
     return true;
