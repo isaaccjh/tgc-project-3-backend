@@ -147,4 +147,8 @@ router.post("/process_payment", express.raw({ type: "application/json" }),
     }
 )
 
+router.get("/success", async (req, res) => {
+    res.send("hi");
+})
+
 module.exports = router;
