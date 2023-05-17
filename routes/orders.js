@@ -41,8 +41,12 @@ router.get("/", [checkIfAuthenticated, checkIfAdmin], async (req, res) => {
             if (form.data.max_total) {
                 q.where("total_cost", "<=", form.data.max_total * 100)
             };
-            if (form.data.order_status) {
+            if (form.data.order_status && form.data.order_status !== 0) {
                 q.where("order_status_id", "=", form.data.order_status)
+            };
+            if (form.data.email) {
+                q.query("join", "users", "orders.user_id", "users.id")
+                    .where("email", "LIKE", `%${form.data.email}%`)
             }
 
             let orders = await q.fetch({
