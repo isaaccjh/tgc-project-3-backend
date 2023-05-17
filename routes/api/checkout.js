@@ -130,12 +130,16 @@ router.post("/process_payment", express.raw({ type: "application/json" }),
             // console.log(JSON.parse(stripeSession.metadata.orders))
             const userId = (JSON.parse(stripeSession.metadata.orders))[0].user_id
             let orderData = getOrderData(userId, stripeSession, paymentIntent);
+            console.log('error happening after line 133');
             const orderItems = JSON.parse(stripeSession.metadata.orders);
             const newOrder = await orderDataLayer.addOrder(orderData);
+            console.log('error happening after line 136');
             const order = await orderDataLayer.findOrderByStripeId(stripeSession.id);
+            console.log('error happening after line 138');
             orderItems.forEach(item => {
                  orderDataLayer.addOrderItem(order.id, item.variant_id, item.quantity);
             })
+            console.log('error happening after line 141');
 
             // after checking out, clear cart items from user
              await cartDataLayer.clearUserCart(userId);
@@ -147,8 +151,8 @@ router.post("/process_payment", express.raw({ type: "application/json" }),
     }
 )
 
-router.get("/success", async (req, res) => {
-    res.send("hi");
-})
+// router.get("/success", async (req, res) => {
+//     res.send("hi");
+// })
 
 module.exports = router;
