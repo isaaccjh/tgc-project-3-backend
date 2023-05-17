@@ -137,23 +137,23 @@ router.post(
 
       // console.log(JSON.parse(stripeSession.metadata.orders))
       const userId = JSON.parse(stripeSession.metadata.orders)[0].user_id;
-      console.log("error after 138");
+
       let orderData = getOrderData(userId, stripeSession, paymentIntent);
-      console.log("error after 140");
+
       const orderItems = JSON.parse(stripeSession.metadata.orders);
-      console.log("error after 142");
+
       const newOrder = await orderDataLayer.addOrder(orderData);
-      console.log("error after 144");
+
       const order = await orderDataLayer.findOrderByStripeId(stripeSession.id);
-      console.log("error after 146");
+
       orderItems.forEach((item) => {
         orderDataLayer.addOrderItem(order.id, item.variant_id, item.quantity);
       });
-      console.log("error after 148");
       // after checking out, clear cart items from user
+      console.log(userId);
       await cartDataLayer.clearUserCart(userId);
     }
-    res.send({ received: true });
+    res.redirect("http://localhost:3000/products");
   }
 );
 
