@@ -156,4 +156,8 @@ router.post(
     }
 );
 
+router.get("/success", async (req, res) => {
+    res.redirect("http://localhost:3000/products")
+})
+
 module.exports = router;
