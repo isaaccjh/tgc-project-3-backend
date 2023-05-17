@@ -101,6 +101,7 @@ router.get("/:user_id", express.json(), async (req, res) => {
     ],
   };
 
+  console.log(lineItems);
   let stripeSession = await Stripe.checkout.sessions.create(payment);
   res.render("checkout/checkout", {
     sessionId: stripeSession.id,
