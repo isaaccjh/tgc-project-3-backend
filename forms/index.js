@@ -167,7 +167,7 @@ const createRegistrationForm = () => {
             cssClasses: {
                 label: ["form-label, mt-2"]
             },
-            validators: [validators.required(), validators.minlength(8, "Your password has to be at least 8 characters long!")]
+            validators: [validators.required(), validators.minlength(8, "Your password has to be at least 8 characters")]
         }),
         "confirm_password": fields.password({
             required: true,
@@ -233,14 +233,12 @@ const createLoginForm = () => {
 
 const createLureSearchForm = (series) => {
     return forms.create({
-        "series": fields.string({
+        "name": fields.string({
             required: false,
             errorAfterField: true,
             cssClasses: {
                 label: ["form-label"]
-            },
-            widget: widgets.select(),
-            choices: series
+            }
         }),
         "hook": fields.string({
             required: false,

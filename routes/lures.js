@@ -12,12 +12,13 @@ router.get("/", checkIfAuthenticated, async (req, res) => {
     allSeries.unshift([0, "----"]);
 
     const searchForm = createLureSearchForm(allSeries);
-    const q = Lure.collection();
+    let q = Lure.collection();
     searchForm.handle(req, {
         "success": async (form) => {
             if (form.data.name) {
                 q.where("name", "like", `%${form.data.name}%`);
             }
+
             if (form.data.hook) {
                 q.where("hook", "like", `%${form.data.hook}%`)
             }
