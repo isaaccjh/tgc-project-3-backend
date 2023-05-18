@@ -1,43 +1,67 @@
 const { CartItem } = require("../models");
 
 const getCart = async (userId) => {
-    const cart = await CartItem.collection().where({
-        "user_id": userId
-    }).fetch({
-        require: false,
-        withRelated: ["variant", "variant.lure", "variant.colour", "variant.property", "lure", "lure.serie"]
-    });
-    return cart;
-}
+    try {
+        const cart = await CartItem.collection()
+            .where({
+                user_id: userId,
+            })
+            .fetch({
+                require: false,
+                withRelated: [
+                    "variant",
+                    "variant.lure",
+                    "variant.colour",
+                    "variant.property",
+                    "lure",
+                    "lure.serie",
+                ],
+            });
+        return cart;
+    } catch (e) {
+        console.log(e)
+        return false;
+    }
+};
 
 const getCartItemByUserAndVariant = async (userId, variantId) => {
-    const items = await CartItem.where({
-        "user_id": userId,
-        "variant_id": variantId
-    }).fetch({
-        require: false
-    });
-    return items;
-}
+    try {
+        const items = await CartItem.where({
+            user_id: userId,
+            variant_id: variantId,
+        }).fetch({
+            require: false,
+        });
+        return items;
+    } catch (e) {
+        console.log(e);
+        return false;
+    }
+};
 
 const createCartItem = async (userId, variantId, quantity) => {
     let cartItem = new CartItem({
-        "user_id": userId,
-        "variant_id": variantId,
-        "quantity": quantity
+        user_id: userId,
+        variant_id: variantId,
+        quantity: quantity,
     });
     await cartItem.save();
     return cartItem;
-}
+};
 
 const removeFromCart = async (userId, variantId) => {
-    let cartItem = await getCartItemByUserAndVariant(userId, variantId);
-    if (cartItem) {
-        await cartItem.destroy();
-        return true;
+    try {
+        let cartItem = await getCartItemByUserAndVariant(userId, variantId);
+        if (cartItem) {
+            await cartItem.destroy();
+            return true;
+        }
+        return false;
+    } catch (e) {
+        console.log(e);
+        return false;
     }
-    return false;
-}
+};
 
 const updateQuantity = async (userId, variantId, newQuantity) => {
     let cartItem = await getCartItemByUserAndVariant(userId, variantId);
@@ -50,17 +74,21 @@ const updateQuantity = async (userId, variantId, newQuantity) => {
 };
 
 const clearUserCart = async (userId) => {
-    let userCart = await getCart(userId);
-    // running through the cart to clear all of them
-    if (userCart) {
-        userCart.forEach(async (item) => {
-            await item.destroy();
-        });
-        return true;
-    };
-    return false;
-}
-
+    try {
+        let userCart = await getCart(userId);
+        // running through the cart to clear all of them
+        if (userCart) {
+            userCart.forEach(async (item) => {
+                console.log("destroying!");
+                await item.destroy();
+            });
+            return true;
+        }
+        return false;
+    } catch (e) {
+        console.log(e)
+    }
+};
 
 module.exports = {
     getCart,
@@ -68,5 +96,5 @@ module.exports = {
     createCartItem,
     removeFromCart,
     updateQuantity,
-    clearUserCart
-}
+    clearUserCart,
+};

@@ -5,28 +5,28 @@ class CartServices {
         this.user_id = user_id
     }
 
-    async addToCart (variantId, quantity) {
+    async addToCart(variantId, quantity) {
         let cartItem = await cartDataLayer
-            .getCartItemByUserAndVariant (this.user_id, variantId);
+            .getCartItemByUserAndVariant(this.user_id, variantId);
 
         if (cartItem) {
             return await cartDataLayer
-                .updateQuantity(this.user_id, variantId, cartItem.get("quantity") + 1);
+                .updateQuantity(this.user_id, variantId, parseInt(cartItem.get("quantity")) + 1);
         } else {
             let newCartItem = cartDataLayer
-                .createCartItem(this.user_id, variantId, quantity);
+                .createCartItem(this.user_id, variantId, parseInt(quantity));
             return newCartItem;
         }
     }
 
-    async remove (variantId) {
+    async remove(variantId) {
         return await cartDataLayer
             .removeFromCart(this.user_id, variantId)
     }
 
-    async setQuantity (variantId, quantity) {
+    async setQuantity(variantId, quantity) {
         return await cartDataLayer
-            .updateQuantity(this.user_id, variantId, quantity)
+            .updateQuantity(this.user_id, variantId, parseInt(quantity))
     }
 
     async getCart() {
