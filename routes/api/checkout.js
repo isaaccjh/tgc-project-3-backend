@@ -157,7 +157,7 @@ router.post(
 );
 
 router.get("/success", async (req, res) => {
-    res.redirect("http://localhost:3000/products")
+    res.redirect("https://animated-bombolone-f50579.netlify.app/products")
 })
 
 module.exports = router;
