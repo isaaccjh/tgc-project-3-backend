@@ -4,19 +4,19 @@ const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
 const { User, BlacklistedToken } = require("../../models")
-const { checkIfAuthenticatedJWT } = require("../../middlewares")
 
 const tokenAccessLayer = require("../../dal/tokens");
+const { checkIfAuthenticatedJWT } = require("../../middlewares")
 
-    // const generateToken = (user) => {
-    //     return jwt.sign({
-    //         "username": user.get("username"),
-    //         "id": user.get("id"),
-    //         "email": user.get("email")
-    //     }, process.env.TOKEN_SECRET, {
-    //         expiresIn: "1h"
-    //     });
-    // }
+// const generateToken = (user) => {
+//     return jwt.sign({
+//         "username": user.get("username"),
+//         "id": user.get("id"),
+//         "email": user.get("email")
+//     }, process.env.TOKEN_SECRET, {
+//         expiresIn: "1h"
+//     });
+// }
 
 const generateToken = (user, secret, expiresIn) => {
     return jwt.sign({
@@ -49,6 +49,7 @@ router.post("/register", async (req, res) => {
     await user.save();
     res.send(user);
 });
+
 
 router.post("/login", async (req, res) => {
     const user = await User.where({

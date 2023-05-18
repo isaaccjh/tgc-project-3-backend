@@ -18,13 +18,6 @@ router.get("/", checkIfAuthenticated, async (req, res) => {
             if (form.data.name) {
                 q.where("name", "like", `%${form.data.name}%`);
             }
-
-            if (form.data.series) {
-                q.query("join", "series", "lures.serie_id", "series.id")
-                    .where("lures.serie_id", "=", form.data.series)
-                    .select('lures.name as lure_name', 'series.name as series_name')
-            };
-
             if (form.data.hook) {
                 q.where("hook", "like", `%${form.data.hook}%`)
             }

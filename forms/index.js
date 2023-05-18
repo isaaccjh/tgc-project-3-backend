@@ -233,13 +233,6 @@ const createLoginForm = () => {
 
 const createLureSearchForm = (series) => {
     return forms.create({
-        "name": fields.string({
-            required: false,
-            errorAfterField: true,
-            cssClasses: {
-                label: ["form-label"]
-            }
-        }),
         "series": fields.string({
             required: false,
             errorAfterField: true,
