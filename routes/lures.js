@@ -21,7 +21,8 @@ router.get("/", checkIfAuthenticated, async (req, res) => {
 
             if (form.data.series) {
                 q.query("join", "series", "lures.serie_id", "series.id")
-                    .where("lures.serie_id", "=", form.data.series);
+                    .where("lures.serie_id", "=", form.data.series)
+                    .select('lures.name as lure_name', 'series.name as series_name')
             };
 
             if (form.data.hook) {
