@@ -35,7 +35,7 @@ const createLureForm = (series) => {
             },
             validators: [validators.required()]
         }),
-        "description":fields.string({
+        "description": fields.string({
             required: true,
             errorAfterField: true,
             cssClasses: {
@@ -64,7 +64,7 @@ const createLureForm = (series) => {
             cssClasses: {
                 label: ["form-label, mt-2"]
             }
-        }) ,
+        }),
         "weight": fields.number({
             label: "Weight (g)",
             required: true,
@@ -255,7 +255,7 @@ const createLureSearchForm = (series) => {
             cssClasses: {
                 label: ["form-label"]
             }
-            
+
         }),
         "type": fields.string({
             required: false,
@@ -306,7 +306,7 @@ const createLureSearchForm = (series) => {
                 label: ["form-label"]
             }
         })
-        
+
     })
 }
 
@@ -358,7 +358,7 @@ const createOrderSearchForm = (order_statuses) => {
             label: "Order Status",
             required: false,
             errorAfterField: true,
-            cssClasses:{
+            cssClasses: {
                 label: ["form-label"]
             },
             widget: widgets.select(),
@@ -375,13 +375,13 @@ const createOrderSearchForm = (order_statuses) => {
     })
 }
 
-module.exports = { 
-    createLureForm, 
-    createVariantForm, 
-    bootstrapField, 
+module.exports = {
+    createLureForm,
+    createVariantForm,
+    bootstrapField,
     createRegistrationForm,
     createLoginForm,
     createLureSearchForm,
     createOrderStatusUpdateForm,
     createOrderSearchForm
- };
+};

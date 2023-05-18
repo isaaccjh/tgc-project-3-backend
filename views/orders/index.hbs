@@ -31,10 +31,10 @@
             <td>{{id}}</td>
             <td>{{user.email}}</td>
             <td>
-                {{#if billing_address_line_2}}
-                {{billing_address_line_1}}{{billing_address_line_2}}
+                {{#if shipping_address_line_2}}
+                {{shipping_address_line_1}}{{shipping_address_line_2}}
                 {{else}}
-                {{billing_address_line_1}}
+                {{shipping_address_line_1}}
                 {{/if}}
             </td>
             <td>${{toDollars total_cost}}</td>
