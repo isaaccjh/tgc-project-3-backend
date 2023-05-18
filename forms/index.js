@@ -167,7 +167,7 @@ const createRegistrationForm = () => {
             cssClasses: {
                 label: ["form-label, mt-2"]
             },
-            validators: [validators.required(), validators.regexp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", "Your password has to contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character")]
+            validators: [validators.required(), validators.minlength(8, "Your password has to be at least 8 characters long!")]
         }),
         "confirm_password": fields.password({
             required: true,
